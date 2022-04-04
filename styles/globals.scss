@@ -12,3 +12,18 @@ body {
   font-size: 62.5%;
   height: 100vh;
 }
+
+.swiper-pagination-bullet {
+  background-color: #575656 !important;
+  border-radius: 0 !important;
+  width: 4.8rem !important;
+  height: 0.4rem !important;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #BD0029 !important;
+  border-radius: 0 !important;
+  width: 4.8rem !important;
+  height: 0.4rem !important;
+}
+

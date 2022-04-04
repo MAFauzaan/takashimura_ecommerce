@@ -1,0 +1,75 @@
+.displayImage {
+    background-color: grey;
+}
+
+@media screen and (min-width: 1100px) {
+    .displayImage {
+        display: flex;
+        place-content: center;
+        text-align: center;
+        width: 49.7rem;
+        height: 52.8rem;
+        position: sticky;
+        top: 5rem;
+        align-self: flex-start;
+    }
+}
+
+@media screen and (max-width: 1099px ) and (min-width: 769px) {
+    .displayImage {
+        display: flex;
+        place-content: center;
+        text-align: center;
+        width: 42.2rem;
+        height: 30.8rem;
+        position: sticky;
+        top: 5rem;
+        align-self: flex-start;
+    }
+}
+
+@media screen and (max-width: 768px ) {
+    .displayImage {
+        width: 42.2rem;
+        height: 30.8rem;
+        top: 5rem;
+    }
+}
+
+.hero {
+    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.7)), url('../public/hero.png');
+    background-size: cover;
+    // opacity: 0.6;
+}
+
+@media screen and (max-width: 600px) {
+    .hero {
+        background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.7)), url('../public/hero.png');
+        background-size: 200% 100%;
+    }
+}
+
+.imgPopup {
+    bottom: -50px;
+    animation: popup 0.4s ease forwards;
+}
+
+.descriptionPopup {
+    top: -50px;
+    animation: descPopup 0.4s ease forwards;
+}
+
+.disappear {
+    height: 0px;
+    transition: height 0.4s;
+}
+
+@keyframes popup {
+    0% {}
+    100% { transform: translateY(-50px);}
+}
+
+@keyframes descPopup {
+    0% {}
+    100% { transform: translateY(20px);}
+}

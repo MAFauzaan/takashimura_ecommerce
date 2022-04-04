@@ -15,13 +15,13 @@ const PageLayout = ({ children }: ILayout) => {
 
     return (
         <Layout>
-            <Header className={`${windowWidth < 768 ? 'p-0' : ''} bg-white`}>
+            <Header className={`${windowWidth <= 769 ? 'p-0' : ''} bg-white`}>
                 <PageHeader />
             </Header>
             <Content className="bg-white">
                 {children}
             </Content>
-            <Footer className="bg-white">
+            <Footer className={`${windowWidth <= 769 ? 'p-5' : ''} bg-white`}>
                 <PageFooter />
             </Footer>
         </Layout>
