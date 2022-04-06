@@ -6,7 +6,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper";
 import { DownOutlined } from '@ant-design/icons';
 import { useDynamicScreen } from '../hooks/useDynamicScreen';
-import { ItemsList, IitemList } from '../List/OptionsList';
+import { ItemsList, IitemList } from '../DUMMY/OptionsList';
 
 import "swiper/css";
 import "swiper/css/pagination";

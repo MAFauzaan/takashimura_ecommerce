@@ -15,7 +15,7 @@ const PageLayout = ({ children }: ILayout) => {
 
     return (
         <Layout>
-            <Header className={`${windowWidth <= 769 ? 'p-0' : ''} bg-white`}>
+            <Header className={`${windowWidth <= 769 ? 'p-0' : ''} bg-white  border-b-2`}>
                 <PageHeader />
             </Header>
             <Content className="bg-white">

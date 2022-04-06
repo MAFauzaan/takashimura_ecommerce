@@ -1,25 +1,34 @@
-import React, { useState } from 'react';
-import { Row, Col, Typography, Drawer } from "antd"
+import React, { useEffect, useState } from 'react';
+import { Row, Col, Typography, Drawer, Input } from "antd"
 import { useDynamicScreen } from "../../hooks/useDynamicScreen";
-import { SearchOutlined, ShoppingOutlined, MenuOutlined } from '@ant-design/icons'
+import { SearchOutlined, ShoppingOutlined, MenuOutlined, CloseOutlined } from '@ant-design/icons'
+import { useDispatch } from 'react-redux';
+import { useAppSelector } from '../../store/hooks';
+import { onOpenDrawer as openCart, onCloseDrawer as closeCart } from '../../store/reducers/cartSlice';
 import style from './_Header.module.scss'
+import CustomDrawer from './CustomDrawer';
+import { useHeader } from './useHeader';
 
-const { Text, Title } = Typography;
+const { Text } = Typography;
 
 export const Header = () => {
+    const dispatch = useDispatch();
+    const { openDrawer, onOpenDrawer, onCloseDrawer } = useHeader();
+    
     const { windowWidth } = useDynamicScreen();
 
-    const [ openDrawer, setOpenDrawer ] = useState<boolean>(false);
-    
-    const onOpenDrawer = () => {
-        setOpenDrawer(true)
-    }
+    const TotalItemCart = () => (
+        <div className="bg-[#BD0029] h-[24px] w-[24px] rounded-full inline-block items-center justify-center">
+            <p className="text-2xl text-white">0</p>
+        </div>
+    )
 
-    const onCloseDrawer = () => {
-        setOpenDrawer(false)
+    const onOpenCart = () => {
+        if (openDrawer) {
+            onCloseDrawer();            
+        } 
+        dispatch(() => dispatch(openCart()))
     }
-
-    console.log(openDrawer)
 
     return (
         <>
@@ -32,14 +41,12 @@ export const Header = () => {
                                 <Text className="text-[16px]">Produk</Text>
                             </Col>
                             <Col span={8} className="text-center flex place-items-center place-content-center">
-                                <div className={style.logoTop} />
+                                <div className={`${style.logoTop} absolute top-[25px]`} />
                             </Col>
                             <Col span={8} className="text-center flex justify-center items-center">
                                 <div className="mr-[24px]">
-                                    <Text className="text-[16px] mr-4">Keranjang</Text>
-                                    <div className="bg-[#BD0029] h-[24px] w-[24px] rounded-full inline-block items-center justify-center">
-                                        <p className="text-2xl text-white">0</p>
-                                    </div>
+                                    <Text className="text-[16px] mr-4 hover:cursor-pointer" onClick={onOpenCart}>Keranjang</Text>
+                                    <TotalItemCart />
                                 </div>
                                 <Text className="text-[16px] mr-4">Masuk</Text>
                                 <SearchOutlined className="text-4xl" />
@@ -53,51 +60,46 @@ export const Header = () => {
                                     <Text className="text-[16px]">Produk</Text>
                                 </Col>
                                 <Col span={8} className="text-center flex place-items-center place-content-center">
-                                    <div className={style.logoTop} />
+                                    <div className={`${style.logoTop} absolute top-[25px]`} />
                                 </Col>
                                 <Col span={8} className="text-center">
                                     <div className="mr-[24px]">
-                                        <ShoppingOutlined className="text-4xl mr-[5px] " />
-                                        <div className="bg-[#BD0029] h-[24px] w-[24px] rounded-full inline-block items-center justify-center text-center relative top-[3px]">
-                                            <p className="text-2xl text-white mt-[1px]">0</p>
-                                        </div>
+                                        <ShoppingOutlined className="text-4xl mr-[5px] hover:cursor-pointer" onClick={onOpenCart} />
+                                        <TotalItemCart />
                                         <Text className="text-[16px] mr-4 ml-4">Masuk</Text>
                                         <SearchOutlined className="text-4xl ml-" />
                                     </div>
                                 </Col>
                             </>
                             :
-                            windowWidth <600 ?
-                            <>
-                                <Col span={windowWidth < 768 ? 4 : 8}>
-                                    <MenuOutlined className="text-4xl relative bottom-[1px] ml-[21px]" onClick={onOpenDrawer}/>
-                                </Col>
-                                <Col span={windowWidth < 768 ? 15 : 8} className="text-center flex place-items-center place-content-center">
-                                 <div className={style.logoTop} />
-                                </Col>
-                                <Col span={windowWidth < 768 ? 5 : 8} className="text-right">
-                                    <div className="mr-[12px]">
-                                        <ShoppingOutlined className="text-4xl mr-[5px] " />
-                                        <div className="bg-[#BD0029] h-[24px] w-[24px] rounded-full inline-block items-center justify-center text-center relative top-[3px]">
-                                            <p className="text-2xl text-white mt-[1px]">0</p>
+                            windowWidth <= 600 ?
+                                <>
+                                    <Col span={windowWidth < 768 ? 4 : 8}>
+                                        {
+                                            openDrawer ?
+                                                <CloseOutlined className="text-4xl relative bottom-[1px] ml-[21px]" onClick={onCloseDrawer} />
+                                                :
+                                                <MenuOutlined className="text-4xl relative bottom-[1px] ml-[21px]" onClick={onOpenDrawer} />
+                                        }
+                                    </Col>
+                                    <Col span={windowWidth < 768 ? 15 : 8} className="text-center flex place-items-center place-content-center">
+                                        <div className={`${style.logoTop} absolute top-[25px]`} />
+                                    </Col>
+                                    <Col span={windowWidth < 768 ? 5 : 8} className="text-center">
+                                        <div className="mr-[24px]">
+                                            <ShoppingOutlined className="text-4xl mr-[5px] hover:cursor-pointer" onClick={onOpenCart} />
+                                            <TotalItemCart />
                                         </div>
-                                    </div>
-                                </Col>
-                                <Drawer
-                                    visible={openDrawer}
-                                    onClose={onCloseDrawer}
-                                    width={378}
-                                    placement="left"
-                                > 
-                                    <Text className='block text-4xl mb-10'>Jelajahi</Text>
-                                    <Text className='block text-4xl mb-10'>Produk</Text>
-                                    <Text className='block text-4xl'>Masuk</Text>
-                                </Drawer>
-                            </>
-                            :
-                            null
+                                    </Col>
+                                </>
+                                :
+                                null
                 }
             </Row>
+            {
+                openDrawer && windowWidth <= 769 &&
+                <CustomDrawer onClick={onCloseDrawer}/>
+            }
         </>
     )
 }
