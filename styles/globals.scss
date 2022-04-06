@@ -27,3 +27,24 @@ body {
   height: 0.4rem !important;
 }
 
+.ant-drawer-header {
+  display: none;
+}
+
+.ant-drawer-body {
+  padding: 0;
+}
+
+.ant-drawer-content-wrapper {
+  box-shadow: none !important;
+}
+
+.ant-drawer-content {
+  height: calc(100vh - 64.2px) !important;
+  position: absolute;
+  bottom: 0;
+}
+
+.ant-input-affix-wrapper {
+  border-color: #BD0029;
+}

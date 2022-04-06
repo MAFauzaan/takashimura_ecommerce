@@ -1,12 +1,19 @@
-import '../styles/globals.scss'
 import type { AppProps } from 'next/app'
+import { Provider } from 'react-redux'
 import PageLayout from '../components/Layout/PageLayout'
+import Cart from '../components/Cart/Cart'
+import store from '../store/store'
+
+import '../styles/globals.scss'
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <PageLayout>
-      <Component {...pageProps} />
-    </PageLayout>
+    <Provider store={store}>
+      <PageLayout>
+        <Component {...pageProps} />
+        <Cart />
+      </PageLayout>
+    </Provider>
   )
 }
 
