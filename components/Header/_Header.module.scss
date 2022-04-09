@@ -23,9 +23,15 @@
     z-index: 50;
     left: -80px;
     animation: slide 0.15s linear forwards;
-}
+    box-shadow: 10px -3px 5px -6px rgba(0,0,0,0.41);
+    -webkit-box-shadow: 10px -3px 5px -6px rgba(0,0,0,0.41);
+    -moz-box-shadow: 10px -3px 5px -6px rgba(0,0,0,0.41);
+    }
 
 @keyframes slide {
     0% {}
-    100% { transform: translatex(80px);}
+
+    100% {
+        transform: translatex(80px);
+    }
 }

@@ -19,7 +19,7 @@ export const Header = () => {
 
     const TotalItemCart = () => (
         <div className="bg-[#BD0029] h-[24px] w-[24px] rounded-full inline-block items-center justify-center">
-            <p className="text-2xl text-white">0</p>
+            <p className="text-2xl text-white !text-center">0</p>
         </div>
     )
 
