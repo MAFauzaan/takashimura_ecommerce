@@ -8,6 +8,7 @@ import { checkOpenDrawer, onCloseDrawer } from '../../store/reducers/cartSlice';
 
 import { CartList, ICartList } from '../../DUMMY/CartList';
 import style from './_Cart.module.scss'
+import ItemMiniDescription from '../ItemMiniDescription/ItemMiniDescription';
 
 const { Text } = Typography;
 
@@ -32,9 +33,7 @@ const Cart = () => {
             width={windowWidth > 600 ? 556 : 380}
             onClose={() => dispatch(onCloseDrawer())}
             visible={isCartOpened}
-            maskStyle={{
-                opacity: 0
-            }}
+           
         >
             <div className='relative h-full w-full'>
                 <div className='flex px-[16px] py-[20px] place-content-center font-semibold relative'>
@@ -55,11 +54,7 @@ const Cart = () => {
                                     windowWidth > 769 ?
                                         <Row className='px-[16px] mb-[32px]'>
                                             <Col span={12} className='flex'>
-                                                <div className='w-[64px] h-[64px]  bg-red-700 inline-block' />
-                                                <div className='w-[184px] ml-[16px]'>
-                                                    <Text className='text-[14px] inline-block'>{cartItem.name}</Text>
-                                                    <Text className='text-[14px] inline-block font-medium'>{`Rp${cartItem.price}`}</Text>
-                                                </div>
+                                               <ItemMiniDescription itemName={cartItem.name} itemPrice={cartItem.price} />
                                             </Col>
                                             <Col span={6} className='flex place-items-center'>
                                                 <Row className='w-full h-[40px] text-center border-2 rounded-md'>
@@ -83,9 +78,9 @@ const Cart = () => {
                                         <Row className='px-[16px] mb-[32px]'>
                                             <Col span={24} className='flex mb-12'>
                                                 <div className='w-[64px] h-[64px]  bg-red-700 inline-block' />
-                                                <div className='w-[184px] ml-[16px]'>
-                                                    <Text className='text-[14px] inline-block'>{cartItem.name}</Text>
-                                                    <Text className='text-[14px] inline-block font-medium'>{`Rp${cartItem.price}`}</Text>
+                                                <div className=' ml-[16px]'>
+                                                    <Text className='text-[14px] block w-full mb-[8px]'>{cartItem.name}</Text>
+                                                    <Text className='text-[14px]  font-medium'>{`Rp${cartItem.price}`}</Text>
                                                 </div>
                                             </Col>
                                             <Col span={8} />
