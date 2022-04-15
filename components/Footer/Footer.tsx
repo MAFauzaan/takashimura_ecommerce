@@ -1,6 +1,6 @@
 import { Row, Col, Typography, Divider } from "antd"
 import Image from "next/image";
-import { useDynamicScreen } from "../../hooks/useDynamicScreen";
+import { useDynamicScreen } from "../../common/hooks/useDynamicScreen";
 
 const { Text } = Typography;
 

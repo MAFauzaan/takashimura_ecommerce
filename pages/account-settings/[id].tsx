@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 import { Typography, Input, Row, Col, Table } from 'antd';
 import { clone } from 'ramda';
-import { useDynamicScreen } from '../../hooks/useDynamicScreen';
+import { useDynamicScreen } from '../../common/hooks/useDynamicScreen';
 import { useAppSelector } from '../../store/hooks';
 import { checkUserData } from '../../store/reducers/userSlice';
 import { CartList } from '../../DUMMY/CartList';
