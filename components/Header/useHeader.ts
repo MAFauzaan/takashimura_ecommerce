@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useDynamicScreen } from "../../hooks/useDynamicScreen";
+import { useDynamicScreen } from "../../common/hooks/useDynamicScreen";
 
 export const useHeader = () => {
     const { windowWidth } = useDynamicScreen();
     const [openDrawer, setOpenDrawer] = useState<boolean>(false);
-    console.log(openDrawer)
+
     const onOpenDrawer = () => {
         setOpenDrawer(true)
     }

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Drawer, Typography, Divider, Row, Col } from 'antd';
 import { CloseOutlined, MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
-import { useDynamicScreen } from '../../hooks/useDynamicScreen';
+import { useDynamicScreen } from '../../common/hooks/useDynamicScreen';
 import { useAppSelector } from '../../store/hooks';
 import { checkOpenDrawer, onCloseDrawer } from '../../store/reducers/cartSlice';
 
@@ -17,7 +17,7 @@ const Cart = () => {
     const dispatch = useDispatch();
     
     const isCartOpened: boolean = useAppSelector(checkOpenDrawer);
-    console.log(isCartOpened)
+
     useEffect(() => {
         if (isCartOpened){
             document.body.style.overflow = 'hidden';        
@@ -33,7 +33,7 @@ const Cart = () => {
             width={windowWidth > 600 ? 556 : 380}
             onClose={() => dispatch(onCloseDrawer())}
             visible={isCartOpened}
-           
+            mask={false}
         >
             <div className='relative h-full w-full'>
                 <div className='flex px-[16px] py-[20px] place-content-center font-semibold relative'>

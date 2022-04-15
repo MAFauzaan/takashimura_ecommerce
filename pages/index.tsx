@@ -5,12 +5,13 @@ import { Card, Typography, Row, Col, Divider, Select } from 'antd'
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper";
 import { DownOutlined } from '@ant-design/icons';
-import { useDynamicScreen } from '../hooks/useDynamicScreen';
+import { useDynamicScreen } from '../common/hooks/useDynamicScreen';
 import { ItemsList, IitemList } from '../DUMMY/OptionsList';
 
 import "swiper/css";
 import "swiper/css/pagination";
 import style from '../styles/_index.module.scss'
+import ItemCard from '../components/ItemCard/ItemCard';
 
 const { Text } = Typography;
 const { Option } = Select;
@@ -214,28 +215,21 @@ const Home: NextPage = () => {
           <Swiper
             spaceBetween={30}
             slidesPerView={
-              windowWidth >= 1600 ? 5 : windowWidth > 1280 ? 4 : windowWidth <= 1280 && windowWidth > 900 ? 3
+              windowWidth >= 1600 ? 5 : windowWidth > 1280 && windowWidth < 1600 ? 4 : windowWidth <= 1280 && windowWidth > 900 ? 3
                 : windowWidth <= 900 && windowWidth > 769 ? 2 : 1
             }
-            pagination={{
-              clickable: true,
-            }}
-            modules={[Pagination]}
+            className='mb-[64px]'
           >
             {
-              ItemsList.map((item: IitemList) => {
+              ItemsList[0].items.map((item: any) => {
                 return (
                   <SwiperSlide key={item.id} className='flex place-content-center place-items-center'>
-                    <Card className='w-[285px] h-[400px]'>
-                      <Text>{item.name}</Text>
-                      <Text>{item.description}</Text>
-                    </Card>
+                      <ItemCard item={item}/>
                   </SwiperSlide>
                 )
               })
             }
-          </Swiper>
-        </div>
+          </Swiper>        </div>
       </section>
     </>
   )

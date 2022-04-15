@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Row, Col, Typography, Drawer, Input } from "antd"
-import { useDynamicScreen } from "../../hooks/useDynamicScreen";
+import { useDynamicScreen } from "../../common/hooks/useDynamicScreen";
 import { SearchOutlined, ShoppingOutlined, MenuOutlined, CloseOutlined } from '@ant-design/icons'
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '../../store/hooks';

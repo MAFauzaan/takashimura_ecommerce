@@ -1,7 +1,7 @@
 import { Layout } from 'antd';
 import { Header as PageHeader } from "../Header/Header";
 import { Footer as PageFooter} from "../Footer/Footer";
-import { useDynamicScreen } from '../../hooks/useDynamicScreen';
+import { useDynamicScreen } from '../../common/hooks/useDynamicScreen';
 
 const { Header, Footer, Content } = Layout;
 
