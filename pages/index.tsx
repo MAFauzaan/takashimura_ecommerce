@@ -211,12 +211,12 @@ const Home: NextPage = () => {
             Lihat Semua Koleksi
           </Text>
         </div>
-        <div className='flex justify-center'>
+        <div>
           <Swiper
             spaceBetween={30}
             slidesPerView={
-              windowWidth >= 1600 ? 5 : windowWidth > 1280 && windowWidth < 1600 ? 4 : windowWidth <= 1280 && windowWidth > 900 ? 3
-                : windowWidth <= 900 && windowWidth > 769 ? 2 : 1
+              windowWidth >= 1100 ? 5 : windowWidth < 1100 && windowWidth >= 769 ? 4 
+              : windowWidth < 769 && windowWidth <= 600  ? 3 : 2
             }
             className='mb-[64px]'
           >
@@ -224,7 +224,7 @@ const Home: NextPage = () => {
               ItemsList[0].items.map((item: any) => {
                 return (
                   <SwiperSlide key={item.id} className='flex place-content-center place-items-center'>
-                      <ItemCard item={item}/>
+                    <ItemCard item={item} />
                   </SwiperSlide>
                 )
               })

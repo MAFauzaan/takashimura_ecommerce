@@ -8,11 +8,14 @@ import { onOpenDrawer as openCart, onCloseDrawer as closeCart } from '../../stor
 import style from './_Header.module.scss'
 import CustomDrawer from './CustomDrawer';
 import { useHeader } from './useHeader';
+import { useRouter } from 'next/router';
 
 const { Text } = Typography;
 
 export const Header = () => {
     const dispatch = useDispatch();
+    const router = useRouter();
+    const { replace } = router;
     const { openDrawer, onOpenDrawer, onCloseDrawer } = useHeader();
     
     const { windowWidth } = useDynamicScreen();
@@ -41,7 +44,7 @@ export const Header = () => {
                                 <Text className="text-[16px]">Produk</Text>
                             </Col>
                             <Col span={8} className="text-center flex place-items-center place-content-center">
-                                <div className={`${style.logoTop} absolute top-[25px]`} />
+                                <div className={`${style.logoTop} absolute top-[25px] hover: cursor-pointer`} onClick={() => replace('/')}/>
                             </Col>
                             <Col span={8} className="text-center flex justify-center items-center">
                                 <div className="mr-[24px]">
@@ -60,7 +63,7 @@ export const Header = () => {
                                     <Text className="text-[16px]">Produk</Text>
                                 </Col>
                                 <Col span={8} className="text-center flex place-items-center place-content-center">
-                                    <div className={`${style.logoTop} absolute top-[25px]`} />
+                                    <div className={`${style.logoTop} absolute top-[25px] hover: cursor-pointer`} onClick={() => replace('/')} />
                                 </Col>
                                 <Col span={8} className="text-center">
                                     <div className="mr-[24px]">
@@ -83,7 +86,7 @@ export const Header = () => {
                                         }
                                     </Col>
                                     <Col span={windowWidth < 768 ? 15 : 8} className="text-center flex place-items-center place-content-center">
-                                        <div className={`${style.logoTop} absolute top-[25px]`} />
+                                        <div className={`${style.logoTop} absolute top-[25px]`} onClick={() => replace('/')} />
                                     </Col>
                                     <Col span={windowWidth < 768 ? 5 : 8} className="text-center">
                                         <div className="mr-[24px]">
