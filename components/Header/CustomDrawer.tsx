@@ -1,10 +1,8 @@
 import React from 'react';
-import { Input, Typography } from 'antd';
-import { CloseOutlined, SearchOutlined } from '@ant-design/icons';
+import { TextField, Typography } from '@mui/material';
+import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 
 import style from './_Header.module.scss';
-
-const { Text } = Typography;
 
 interface ICustomDrawer {
     onClick: any
@@ -13,10 +11,26 @@ interface ICustomDrawer {
 const CustomDrawer = ({onClick}: ICustomDrawer) => (
     <>
         <div className={style.customDrawer}>
-            <Input size='large' placeholder='Cari batik, alat sholat' prefix={<SearchOutlined />} />
-            <Text className='block text-4xl mt-10 mb-10'>Jelajahi</Text>
-            <Text className='block text-4xl mb-10'>Produk</Text>
-            <Text className='block text-4xl'>Masuk</Text>
+            <TextField 
+                fullWidth 
+                placeholder='Cari batik, alat sholat' 
+                InputProps={{ startAdornment: <SearchOutlinedIcon fontSize='large'/>}} 
+                variant='outlined' 
+                size='medium'
+                inputProps={{style: {fontSize: 16}}}
+                className='mt-10 text-[16px]'
+                sx={{
+                    "& label.Mui-focused": {
+                      display: "none"
+                    },
+                    "& legend": {
+                      display: "none"
+                    }
+                  }}
+            />
+            <Typography className='block text-4xl mt-10 mb-10'>Jelajahi</Typography>
+            <Typography className='block text-4xl mb-10'>Produk</Typography>
+            <Typography className='block text-4xl'>Masuk</Typography>
         </div>
         <div className={style.drawerWrapper} onClick={onClick}>
         </div>

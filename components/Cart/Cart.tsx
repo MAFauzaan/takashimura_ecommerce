@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react';
-import { Drawer, Typography, Divider, Row, Col } from 'antd';
+import { Grid, Typography } from '@mui/material';
+import { Drawer, Divider, Row, Col } from 'antd';
 import { CloseOutlined, MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
+import { useRouter } from 'next/router';
 import { useDynamicScreen } from '../../common/hooks/useDynamicScreen';
 import { useAppSelector } from '../../store/hooks';
 import { checkOpenDrawer, onCloseDrawer } from '../../store/reducers/cartSlice';
@@ -10,19 +12,23 @@ import { CartList, ICartList } from '../../DUMMY/CartList';
 import style from './_Cart.module.scss'
 import ItemMiniDescription from '../ItemMiniDescription/ItemMiniDescription';
 
-const { Text } = Typography;
-
 const Cart = () => {
     const { windowWidth } = useDynamicScreen();
+    const { replace } = useRouter();
     const dispatch = useDispatch();
-    
+
     const isCartOpened: boolean = useAppSelector(checkOpenDrawer);
 
+    const onClickCheckout = () => {
+        dispatch(onCloseDrawer());
+        replace('/checkout/information');
+    }
+
     useEffect(() => {
-        if (isCartOpened){
-            document.body.style.overflow = 'hidden';        
+        if (isCartOpened) {
+            document.body.style.overflow = 'hidden';
         } else {
-            document.body.style.overflow = '';        
+            document.body.style.overflow = '';
         }
     }, [isCartOpened]);
 
@@ -37,9 +43,9 @@ const Cart = () => {
         >
             <div className='relative h-full w-full'>
                 <div className='flex px-[16px] py-[20px] place-content-center font-semibold relative'>
-                    <Text className='text-[24px]'>Keranjang</Text>
-                    <div 
-                        className='w-[32px] h-[32px] rounded-full bg-[#F8F9FA] absolute right-16 top-[25px] text-center flex place-items-center justify-center hover:cursor-pointer' 
+                    <Typography className='text-[24px]'>Keranjang</Typography>
+                    <div
+                        className='w-[32px] h-[32px] rounded-full bg-[#F8F9FA] absolute right-16 top-[25px] text-center flex place-items-center justify-center hover:cursor-pointer'
                         onClick={() => dispatch(onCloseDrawer())}
                     >
                         <CloseOutlined className='text-[16px]' />
@@ -52,92 +58,89 @@ const Cart = () => {
                             <React.Fragment key={cartItem.id}>
                                 {
                                     windowWidth > 769 ?
-                                        <Row className='px-[16px] mb-[32px]'>
-                                            <Col span={12} className='flex'>
-                                               <ItemMiniDescription itemName={cartItem.name} itemPrice={cartItem.price} />
-                                            </Col>
-                                            <Col span={6} className='flex place-items-center'>
-                                                <Row className='w-full h-[40px] text-center border-2 rounded-md'>
-                                                    <Col span={8} className='flex place-items-center justify-center'>
+                                        <Grid container className='px-[16px] mb-[32px]'>
+                                            <Grid item xs={6} className='flex'>
+                                                <ItemMiniDescription itemName={cartItem.name} itemPrice={cartItem.price} />
+                                            </Grid>
+                                            <Grid item xs={3} className='flex place-items-center'>
+                                                <Grid container className='w-full h-[40px] text-center border-2 rounded-md'>
+                                                    <Grid item xs={4} className='flex place-items-center justify-center'>
                                                         <MinusOutlined />
-                                                    </Col>
-                                                    <Col span={8} className='flex place-items-center justify-center'>
-                                                        <Text>{cartItem.amount}</Text>
-                                                    </Col>
-                                                    <Col span={8} className='flex place-items-center justify-center'>
+                                                    </Grid>
+                                                    <Grid item xs={4} className='flex place-items-center justify-center'>
+                                                        <Typography>{cartItem.amount}</Typography>
+                                                    </Grid>
+                                                    <Grid item xs={3} className='flex place-items-center justify-center'>
                                                         <PlusOutlined />
-                                                    </Col>
-                                                </Row>
-                                            </Col>
-                                            <Col span={6} className='text-right'>
-                                                <Text className='text-[16px] font-semibold block mb-[16px]'>{`Rp${cartItem.price * cartItem.amount}`}</Text>
-                                                <Text className='text-[14px] block'>Hapus</Text>
-                                            </Col>
-                                        </Row>
+                                                    </Grid>
+                                                </Grid>
+                                            </Grid>
+                                            <Grid item xs={3} className='text-right'>
+                                                <Typography className='text-[16px] font-semibold block mb-[16px]'>{`Rp${cartItem.price * cartItem.amount}`}</Typography>
+                                                <Typography className='text-[14px] block'>Hapus</Typography>
+                                            </Grid>
+                                        </Grid>
                                         :
-                                        <Row className='px-[16px] mb-[32px]'>
-                                            <Col span={24} className='flex mb-12'>
-                                                <div className='w-[64px] h-[64px]  bg-red-700 inline-block' />
-                                                <div className=' ml-[16px]'>
-                                                    <Text className='text-[14px] block w-full mb-[8px]'>{cartItem.name}</Text>
-                                                    <Text className='text-[14px]  font-medium'>{`Rp${cartItem.price}`}</Text>
-                                                </div>
-                                            </Col>
-                                            <Col span={8} />
-                                            <Col span={8} className='flex place-items-center'>
-                                                <Row className='w-full h-[40px] text-center border-2 rounded-md'>
-                                                    <Col span={8} className='flex place-items-center justify-center'>
+                                        <Grid container className='px-[16px] mb-[32px]'>
+                                            <Grid item xs={12} className='flex mb-12'>
+                                                <ItemMiniDescription itemName={cartItem.name} itemPrice={cartItem.price} />
+                                            </Grid>
+                                            <Grid item xs={6} className='flex place-items-center justify-end'>
+                                                <Grid container className='w-[120px] h-[40px] text-center border-2 rounded-md'>
+                                                    <Grid item xs={4} className='flex place-items-center justify-center'>
                                                         <MinusOutlined />
-                                                    </Col>
-                                                    <Col span={8} className='flex place-items-center justify-center'>
-                                                        <Text>{cartItem.amount}</Text>
-                                                    </Col>
-                                                    <Col span={8} className='flex place-items-center justify-center'>
+                                                    </Grid>
+                                                    <Grid item xs={4} className='flex place-items-center justify-center'>
+                                                        <Typography>{cartItem.amount}</Typography>
+                                                    </Grid>
+                                                    <Grid item xs={4} className='flex place-items-center justify-center'>
                                                         <PlusOutlined />
-                                                    </Col>
-                                                </Row>
-                                            </Col>
-                                            <Col span={2} />
-                                            <Col span={6} className='text-right'>
-                                                <Text className='text-[16px] font-semibold block mb-[8px]'>{`Rp${cartItem.price * cartItem.amount}`}</Text>
-                                                <Text className='text-[14px] block'>Hapus</Text>
-                                            </Col>
-                                        </Row>
+                                                    </Grid>
+                                                </Grid>
+                                            </Grid>
+                                            <Grid item xs={6} className='text-right'>
+                                                <Typography className='text-[16px] font-semibold block mb-[8px]'>{`Rp${cartItem.price * cartItem.amount}`}</Typography>
+                                                <Typography className='text-[14px] block'>Hapus</Typography>
+                                            </Grid>
+                                        </Grid>
                                 }
                             </React.Fragment>
                         ))
                     }
                 </div>
-                <div className={`${windowWidth > 600 ? 'w-[556px]' : 'w-[380px]' } fixed bottom-0 bg-[#F8F9FA] py-[24px] px-[16px]`}>
-                    <Text className='block text-[16px] font-medium mb-[24px]'>Rangkuman Pembelian</Text>
-                    <Row className='mb-[16px]'>
-                        <Col span={12}>
-                            <Text className='text-[14px] block'>Subtotal</Text>
-                        </Col>
-                        <Col span={12}>
-                            <Text className='text-[14px] block text-right'>Rp 140.000</Text>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col span={12}>
-                            <Text className='text-[14px] block'>Ongkos Pengiriman</Text>
-                        </Col>
-                        <Col span={12}>
-                            <Text className='text-[14px] block text-right'>Gratis</Text>
-                        </Col>
-                    </Row>
+                <div className={`${windowWidth > 600 ? 'w-[556px]' : 'w-[380px]'} fixed bottom-0 bg-[#F8F9FA] py-[24px] px-[16px]`}>
+                    <Typography className='block text-[16px] font-medium mb-[24px]'>Rangkuman Pembelian</Typography>
+                    <Grid container className='mb-[16px]'>
+                        <Grid item xs={6}>
+                            <Typography className='text-[14px] block'>Subtotal</Typography>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <Typography className='text-[14px] block text-right'>Rp 140.000</Typography>
+                        </Grid>
+                    </Grid>
+                    <Grid container>
+                        <Grid item xs={6}>
+                            <Typography className='text-[14px] block'>Ongkos Pengiriman</Typography>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <Typography className='text-[14px] block text-right'>Gratis</Typography>
+                        </Grid>
+                    </Grid>
                     <Divider />
-                    <Row className='font-semibold mb-[32px]'>
-                        <Col span={12}>
-                            <Text className='text-[14px] block'>Total Biaya</Text>
-                        </Col>
-                        <Col span={12}>
-                            <Text className='text-[14px] block text-right'>Rp 140.000</Text>
-                        </Col>
-                    </Row>
-                    <div className='w-full bg-[#BD0029] font-semibold text-center h-[48px] flex place-items-center justify-center cursor-pointer hover:bg-[#c52f4f]'>
-                        <Text className='text-[#ffff] text-[16px] '>Masuk ke Pembayaran</Text>
-                    </div>  
+                    <Grid container className='font-semibold mb-[32px]'>
+                        <Grid item xs={6}>
+                            <Typography className='text-[14px] block'>Total Biaya</Typography>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <Typography className='text-[14px] block text-right'>Rp 140.000</Typography>
+                        </Grid>
+                    </Grid>
+                    <div
+                        className='w-full bg-[#BD0029] font-semibold text-center h-[48px] flex place-items-center justify-center cursor-pointer hover:bg-[#c52f4f]'
+                        onClick={onClickCheckout}
+                    >
+                        <Typography className='text-[#ffff] text-[16px] '>Masuk ke Pembayaran</Typography>
+                    </div>
                 </div>
             </div>
         </Drawer>

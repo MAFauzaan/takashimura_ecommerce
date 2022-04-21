@@ -1,23 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { Row, Col, Typography, Drawer, Input } from "antd"
+import { Grid, Typography } from '@mui/material'
 import { useDynamicScreen } from "../../common/hooks/useDynamicScreen";
 import { SearchOutlined, ShoppingOutlined, MenuOutlined, CloseOutlined } from '@ant-design/icons'
 import { useDispatch } from 'react-redux';
-import { useAppSelector } from '../../store/hooks';
 import { onOpenDrawer as openCart, onCloseDrawer as closeCart } from '../../store/reducers/cartSlice';
 import style from './_Header.module.scss'
 import CustomDrawer from './CustomDrawer';
 import { useHeader } from './useHeader';
 import { useRouter } from 'next/router';
 
-const { Text } = Typography;
-
 export const Header = () => {
     const dispatch = useDispatch();
     const router = useRouter();
     const { replace } = router;
     const { openDrawer, onOpenDrawer, onCloseDrawer } = useHeader();
-    
+
     const { windowWidth } = useDynamicScreen();
 
     const TotalItemCart = () => (
@@ -28,80 +25,80 @@ export const Header = () => {
 
     const onOpenCart = () => {
         if (openDrawer) {
-            onCloseDrawer();            
-        } 
+            onCloseDrawer();
+        }
         dispatch(() => dispatch(openCart()))
     }
 
     return (
         <>
-            <Row justify={windowWidth > 768 ? 'center' : 'start'}>
+            <Grid container className='h-[64px]'>
                 {
                     windowWidth > 768 ?
                         <>
-                            <Col span={8} className="text-center">
-                                <Text className="text-[16px] mr-16">Jelajahi</Text>
-                                <Text className="text-[16px]">Produk</Text>
-                            </Col>
-                            <Col span={8} className="text-center flex place-items-center place-content-center">
-                                <div className={`${style.logoTop} absolute top-[25px] hover: cursor-pointer`} onClick={() => replace('/')}/>
-                            </Col>
-                            <Col span={8} className="text-center flex justify-center items-center">
-                                <div className="mr-[24px]">
-                                    <Text className="text-[16px] mr-4 hover:cursor-pointer" onClick={onOpenCart}>Keranjang</Text>
+                            <Grid item sm={4} className="flex place-items-center justify-center h-[64px]">
+                                <Typography className="text-[16px] mr-16">Jelajahi</Typography>
+                                <Typography className="text-[16px]">Produk</Typography>
+                            </Grid>
+                            <Grid item sm={4} className="text-center flex place-items-center place-content-center h-[64px]">
+                                <div className={`${style.logoTop} absolute top-[25px] hover: cursor-pointer`} onClick={() => replace('/')} />
+                            </Grid>
+                            <Grid item sm={4} className="text-center flex justify-center items-center h-[64px]">
+                                <div className="mr-[24px] flex">
+                                    <Typography className="text-[16px] mr-4 hover:cursor-pointer" onClick={onOpenCart}>Keranjang</Typography>
                                     <TotalItemCart />
                                 </div>
-                                <Text className="text-[16px] mr-4">Masuk</Text>
+                                <Typography className="text-[16px] mr-4">Masuk</Typography>
                                 <SearchOutlined className="text-4xl" />
-                            </Col>
+                            </Grid>
                         </>
                         :
                         windowWidth > 600 && windowWidth < 769 ?
                             <>
-                                <Col span={8} className="text-center">
-                                    <Text className="text-[16px] mr-16">Jelajahi</Text>
-                                    <Text className="text-[16px]">Produk</Text>
-                                </Col>
-                                <Col span={8} className="text-center flex place-items-center place-content-center">
+                                <Grid item sm={4} className="flex place-items-center justify-center h-[64px]">
+                                    <Typography className="text-[16px] mr-16">Jelajahi</Typography>
+                                    <Typography className="text-[16px]">Produk</Typography>
+                                </Grid>
+                                <Grid item sm={4} className="text-center flex place-items-center place-content-center h-[64px]">
                                     <div className={`${style.logoTop} absolute top-[25px] hover: cursor-pointer`} onClick={() => replace('/')} />
-                                </Col>
-                                <Col span={8} className="text-center">
-                                    <div className="mr-[24px]">
+                                </Grid>
+                                <Grid item sm={4} className="text-center h-[64px] flex" justifyContent='end' justifyItems='center'>
+                                    <div className="mr-[24px] flex place-items-center">
                                         <ShoppingOutlined className="text-4xl mr-[5px] hover:cursor-pointer" onClick={onOpenCart} />
                                         <TotalItemCart />
-                                        <Text className="text-[16px] mr-4 ml-4">Masuk</Text>
+                                        <Typography className="text-[16px] mr-4 ml-4">Masuk</Typography>
                                         <SearchOutlined className="text-4xl ml-" />
                                     </div>
-                                </Col>
+                                </Grid>
                             </>
                             :
                             windowWidth <= 600 ?
                                 <>
-                                    <Col span={windowWidth < 768 ? 4 : 8}>
+                                    <Grid item xs={4}>
                                         {
                                             openDrawer ?
                                                 <CloseOutlined className="text-4xl relative bottom-[1px] ml-[21px]" onClick={onCloseDrawer} />
                                                 :
                                                 <MenuOutlined className="text-4xl relative bottom-[1px] ml-[21px]" onClick={onOpenDrawer} />
                                         }
-                                    </Col>
-                                    <Col span={windowWidth < 768 ? 15 : 8} className="text-center flex place-items-center place-content-center">
+                                    </Grid>
+                                    <Grid item xs={4} className="text-center flex place-items-center place-content-center">
                                         <div className={`${style.logoTop} absolute top-[25px]`} onClick={() => replace('/')} />
-                                    </Col>
-                                    <Col span={windowWidth < 768 ? 5 : 8} className="text-center">
+                                    </Grid>
+                                    <Grid item xs={4} className="text-right">
                                         <div className="mr-[24px]">
                                             <ShoppingOutlined className="text-4xl mr-[5px] hover:cursor-pointer" onClick={onOpenCart} />
                                             <TotalItemCart />
                                         </div>
-                                    </Col>
+                                    </Grid>
                                 </>
                                 :
                                 null
                 }
-            </Row>
+            </Grid>
             {
                 openDrawer && windowWidth <= 769 &&
-                <CustomDrawer onClick={onCloseDrawer}/>
+                <CustomDrawer onClick={onCloseDrawer} />
             }
         </>
     )

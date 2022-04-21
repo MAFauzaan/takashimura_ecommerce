@@ -1,38 +1,131 @@
 import React from 'react';
-import { Typography, Input, Row, Col } from 'antd';
-
-const { Text } = Typography;
+import { Typography, TextField, Grid } from '@mui/material';
+import { useRouter } from 'next/router';
+import { useDynamicScreen } from '../../common/hooks/useDynamicScreen';
 
 const Information = () => {
+    const { push } = useRouter();
+
+    const onNextPage = () => {
+        push('/checkout/shipment')
+    };
+
     return (
         <div>
             <div className='text-[16px] font-semibold mt-[50px]'>
-                <Text>Informasi Kontak</Text>
+                <Typography className='text-[16px] font-semibold'>Informasi Kontak</Typography>
             </div>
             <div className='mt-[32px] text-[16px]'>
                 <label>Nama</label>
-                <Input size='large' className='mb-[32px]' />
-                <label>Alamat</label>
-                <Input size='large' className='mb-[32px]' />
+                <TextField
+                    fullWidth
+                    variant='outlined'
+                    className='mt-10 mb-[32px]'
+                    sx={{
+                        "& label.Mui-focused": {
+                            display: "none"
+                        },
+                        "& legend": {
+                            display: "none"
+                        }
+                    }}
+                />               
+                 <label>Alamat</label>
+                 <TextField
+                    fullWidth
+                    variant='outlined'
+                    className='mt-10 mb-[32px]'
+                    sx={{
+                        "& label.Mui-focused": {
+                            display: "none"
+                        },
+                        "& legend": {
+                            display: "none"
+                        }
+                    }}
+                />               
                 <label>Keterangan Alamat (Opsional)</label>
-                <Input size='large' className='mb-[32px]' />
+                <TextField
+                    fullWidth
+                    variant='outlined'
+                    className='mt-10 mb-[32px]'
+                    sx={{
+                        "& label.Mui-focused": {
+                            display: "none"
+                        },
+                        "& legend": {
+                            display: "none"
+                        }
+                    }}
+                />               
                 <label>Kota</label>
-                <Input size='large' className='mb-[32px]' />
-                <Row className='mb-[32px]'>
-                    <Col span={12}>
+                <TextField
+                    fullWidth
+                    variant='outlined'
+                    className='mt-10 mb-[32px]'
+                    sx={{
+                        "& label.Mui-focused": {
+                            display: "none"
+                        },
+                        "& legend": {
+                            display: "none"
+                        }
+                    }}
+                />               
+                <Grid container className='mb-[32px]'>
+                    <Grid item xs={6}>
                         <label>Provinsi</label>
-                        <Input size='large' className='w-11/12' />
-                    </Col>
-                    <Col span={12}>
+                        <TextField
+                    fullWidth
+                    variant='outlined'
+                    className='mt-10 mb-[32px]'
+                    sx={{
+                        "& label.Mui-focused": {
+                            display: "none"
+                        },
+                        "& legend": {
+                            display: "none"
+                        }
+                    }}
+                />               
+                    </Grid>
+                    <Grid item xs={6}>
                         <label>Kode Pos</label>
-                        <Input size='large' />
-                    </Col>
-                </Row>
+                        <TextField
+                    fullWidth
+                    variant='outlined'
+                    className='mt-10 mb-[32px]'
+                    sx={{
+                        "& label.Mui-focused": {
+                            display: "none"
+                        },
+                        "& legend": {
+                            display: "none"
+                        }
+                    }}
+                />               
+                    </Grid>
+                </Grid>
                 <label>Nomor Telepon</label>
-                <Input size='large' />
+                <TextField
+                    fullWidth
+                    variant='outlined'
+                    className='mt-10 mb-[32px]'
+                    sx={{
+                        "& label.Mui-focused": {
+                            display: "none"
+                        },
+                        "& legend": {
+                            display: "none"
+                        }
+                    }}
+                />               
             </div>
-            <div className='w-7/12 bg-[#BD0029] font-semibold text-center h-[48px] flex place-items-center justify-center cursor-pointer hover:bg-[#c52f4f] mt-[40px]'>
-                <Text className='text-[#ffff] text-[16px] '>Lanjutkan ke Pengiriman</Text>
+            <div
+                className='w-7/12 bg-[#BD0029] font-semibold text-center h-[48px] flex place-items-center justify-center cursor-pointer hover:bg-[#c52f4f] mt-[40px]'
+                onClick={onNextPage}
+            >
+                <Typography className='text-[#ffff] text-[16px] '>Lanjutkan ke Pengiriman</Typography>
             </div>
         </div>
     )
