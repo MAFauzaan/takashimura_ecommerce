@@ -1,16 +1,13 @@
 import React, { useState } from 'react';
 import { ArrowLeftOutlined } from '@ant-design/icons';
-import { Typography, Input, Row, Col, Table } from 'antd';
+import { Input, Row, Col, Table } from 'antd';
+import { Grid, Typography } from '@mui/material';
 import { clone } from 'ramda';
 import { useDynamicScreen } from '../../common/hooks/useDynamicScreen';
 import { useAppSelector } from '../../store/hooks';
 import { checkUserData } from '../../store/reducers/userSlice';
 import { CartList } from '../../DUMMY/CartList';
-import ItemMiniDescription from '../../components/ItemMiniDescription/ItemMiniDescription';
 import { tableColumns, phoneTableColumn } from './components/TableColumn';
-
-const { Text } = Typography;
-
 
 const AccountSettings = () => {
 
@@ -46,20 +43,20 @@ const AccountSettings = () => {
                 {
                     userFormArray.map((user: any, index) => {
                         return (
-                            <Row key={index} className='text-[16px] mb-[16px]'>
-                                <Col span={6}>
-                                    <Text className='block text-[#4F555B]'>{user}</Text>
-                                </Col>
-                                <Col span={15}>
+                            <Grid container key={index} className='text-[16px] mb-[16px]'>
+                                <Grid item xs={4}>
+                                    <Typography className='block text-[#4F555B]'>{user}</Typography>
+                                </Grid>
+                                <Grid item xs={8}>
                                     <Input />
-                                </Col>
-                            </Row>
+                                </Grid>
+                            </Grid>
                         )
                     })
                 }
             </div>
             <div className={`${windowWidth >= 1100 ? 'p-[32px]' : windowWidth > 600 && windowWidth < 1000 ? 'p-[24px]' : 'p-[16px]'} bg-white`}>
-                <Text className='text-[16px] text-[#4F555B] mb-[16px]'>Riwayat Pembelian</Text>
+                <Typography className='text-[16px] text-[#4F555B] mb-[16px]'>Riwayat Pembelian</Typography>
                 {
                     windowWidth > 600 ?
                     <Table dataSource={CartList} columns={tableColumns} pagination={{ pageSize: 3 }} className='mt-[16px]' />
@@ -69,7 +66,7 @@ const AccountSettings = () => {
             </div>
             <div className='flex justify-end mt-[16px]'>
                 <div className='w-[180px] text-center py-[8px] border border-[#343A40]'>
-                    <Text className='text-[16px] font-semibold'>Keluar dari akun</Text>
+                    <Typography className='text-[16px] font-semibold'>Keluar dari akun</Typography>
                 </div>
             </div>
         </div>
