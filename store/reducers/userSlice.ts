@@ -9,7 +9,8 @@ export interface IUserSlice {
         negara: string,
         kodePos: number,
         nomorTelepon: string
-    }
+    },
+    isLoggedIn: true
 }
 
 const initialState: IUserSlice = {
@@ -20,7 +21,8 @@ const initialState: IUserSlice = {
         negara: 'Indonesia',
         kodePos: 17415,
         nomorTelepon: '081319125026'
-    }
+    },
+    isLoggedIn: true
 }
 
 export const userSlice = createSlice({
