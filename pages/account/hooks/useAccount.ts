@@ -18,8 +18,13 @@ type useAccountHook = () => {
 
 export const useAccount: useAccountHook = () => {
     const [selectedTab, setSelectedTab] = useState<number>(0);
-    const [selectedStatusButton, setSelectedStatusButton] = useState<{status: string, selectedOrder: any}>({
+    const [selectedStatusButton, setSelectedStatusButton] = useState<any>({
+        id: '',
+        invoiceNumber: '',
+        date: '',
         status: '',
+        shipmentStatuses: [],
+        statusLabel: '',
         selectedOrder: []
     });
     const [isModalOpened, setIsModalOpened] = useState<boolean>(false);
@@ -30,10 +35,18 @@ export const useAccount: useAccountHook = () => {
     };
 
     const onChangeSelectedStatusButton = (status: string, record: any) => {
+        console.log(record)
         setIsModalOpened(true)
         setSelectedStatusButton({
+            id: record.id,
+            invoiceNumber: record.invoiceNumber,
+            date: record.date,
+            customer: record.customer,
             status,
-            selectedOrder: record.items
+            shipmentStatuses: record.shipmentStatuses.reverse(),
+            statusLabel: record.statusLabel,
+            selectedOrder: record.items,
+            paymentDetails: record.paymentDetails
         })
     };
 

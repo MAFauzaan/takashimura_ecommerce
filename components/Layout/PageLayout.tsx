@@ -21,21 +21,32 @@ const PageLayout = ({ children }: ILayout) => {
                 route === '/checkout/information' ||
                     route === '/checkout/payment' ||
                     route === '/checkout/shipment' ?
-                    <Content className='bg-white'> 
+                    <Content className='bg-white'>
                         {children}
                     </Content>
                     :
-                    <>
-                        <Header className={`${windowWidth <= 769 ? 'p-0' : ''} bg-white  border-b-2`}>
-                            <PageHeader />
-                        </Header>
-                        <Content className="bg-white">
-                            {children}
-                        </Content>
-                        <Footer className={`${windowWidth <= 769 ? 'p-5' : ''} bg-white`}>
-                            <PageFooter />
-                        </Footer>
-                    </>
+                    route === '/login' ||
+                        route === '/signup' ?
+                        <>
+                            <Header className={`${windowWidth <= 769 ? 'p-0' : ''} bg-white  border-b-2`}>
+                                <PageHeader />
+                            </Header>
+                            <Content className="bg-white">
+                                {children}
+                            </Content>
+                        </>
+                        :
+                        <>
+                            <Header className={`${windowWidth <= 769 ? 'p-0' : ''} bg-white  border-b-2`}>
+                                <PageHeader />
+                            </Header>
+                            <Content className="bg-white">
+                                {children}
+                            </Content>
+                            <Footer className={`${windowWidth <= 769 ? 'p-5' : ''} bg-white`}>
+                                <PageFooter />
+                            </Footer>
+                        </>
             }
         </Layout>
     )

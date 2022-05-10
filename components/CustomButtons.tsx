@@ -4,7 +4,7 @@ import { Button, styled } from '@mui/material';
 export const LogOutButton = styled(Button)({
     fontSize: 14,
     fontWeight: 500,
-    paddingTop: 8,
+    paddingTop: 12,
     paddingBottom: 8,
     paddingLeft: 16,
     paddingRight: 16,

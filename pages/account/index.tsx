@@ -5,7 +5,7 @@ import { useDynamicScreen } from '../../common/hooks/useDynamicScreen';
 import { useAppSelector } from '../../store/hooks';
 import { checkUserData } from '../../store/reducers/userSlice';
 import { useAccount } from './hooks/useAccount';
-import { LogOutButton } from './components/CustomButtons';
+import { LogOutButton } from '../../components/CustomButtons';
 import HistoryTable from './components/HistoryTable';
 import UserSettings from './components/UserSettings';
 
@@ -23,7 +23,7 @@ const AccountSettings = () => {
         if (windowWidth >= 1100) {
             return 'pt-[52px] pb-[72px] px-[240px] w-full';
         }
-        if (windowWidth > 600 && windowWidth < 1000) {
+        if (windowWidth > 600 && windowWidth < 1100) {
             return 'pt-[52px] pb-[72px] px-[24px] w-full';
         }
         if (windowWidth < 600 && windowWidth > 530) {

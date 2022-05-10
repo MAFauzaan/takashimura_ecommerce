@@ -78,6 +78,36 @@ export const orders = [
     {
         id: 1,
         status: 'shipment',
+        statusLabel: 'Dalam Pengiriman',
+        customer: {
+            name: '',
+            address: 'Jalan Menuju hatinya yang jauh di sana, nggak kegapai-gapai pula.',
+            phoneNumber: '0812424738948374'
+        },
+        shipmentStatuses: [
+            {
+                id: '12312839012',
+                date: '2022-05-09T08:10:50.526Z',
+                label: 'Pesan diterima penjual'
+            },
+            {
+                id: '12312839012',
+                date: '2022-05-09T08:12:50.526Z',
+                label: 'Pesan diverifikasi penjual'
+            },
+            {
+                id: '32131232111',
+                date: '2022-05-09T08:15:50.526Z',
+                label: 'Menunggu pick up jasa pengantar'
+            },
+            {
+                id: '32454353432',
+                date: '2022-06-09T08:19:50.526Z',
+                label: 'Pesanan dikirim'
+            }
+        ],
+        invoiceNumber: 'INV/20220407/MPL/2206297779',
+        date: '2022-05-09T08:10:50.526Z',
         items: [
             {
                 id: 112121,
@@ -95,11 +125,46 @@ export const orders = [
                 status: 'shipment',
                 rating: 0
             },
-        ]
+        ],
+        paymentDetails: {
+            sub: 280000,
+            shipmentFee: 'Free',
+            total: 280000
+        }
     },
     {
         id: 2,
         status: 'sent',
+        invoiceNumber: 'INV/20220503/MPL/2138291812',
+        date: '2022-05-09T08:10:50.526Z',
+        statusLabel: 'Pesanan Terkirim',
+        customer: {
+            name: '',
+            address: 'Jalan Menuju hatinya yang jauh di sana, nggak kegapai-gapai pula.',
+            phoneNumber: '0812424738948374'
+        },
+        shipmentStatuses: [
+            {
+                id: '12312839012',
+                date: '2022-05-09T08:10:50.526Z',
+                label: 'Pesan diterima penjual'
+            },
+            {
+                id: '12312839012',
+                date: '2022-05-09T08:12:50.526Z',
+                label: 'Pesan diverifikasi penjual'
+            },
+            {
+                id: '32454353432',
+                date: '2022-05-09T08:15:50.526Z',
+                label: 'Menunggu pick up jasa pengantar'
+            },
+            {
+                id: '32454353432',
+                date: '2022-06-09T08:19:50.526Z',
+                label: 'Pesanan dikirim'
+            }
+        ],
         items: [
             {
                 id: 1121,
@@ -117,6 +182,12 @@ export const orders = [
                 status: 'shipment',
                 rating: 0
             },
-        ]
+        ],
+        paymentDetails: {
+            sub: 280000,
+            shipmentFee: 'Free',
+            total: 280000
+        }
     }
 ]
+

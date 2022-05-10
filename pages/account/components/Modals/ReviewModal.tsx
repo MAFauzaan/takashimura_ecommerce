@@ -2,7 +2,7 @@ import React from 'react';
 import { clone } from 'ramda';
 import { Modal, Divider, Typography, Grid, Rating, TextField } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import { StatusButton } from '../CustomButtons';
+import { StatusButton } from '../../../../components/CustomButtons';
 import styles from '../../../../styles/_modal.module.scss';
 
 type modal = {
@@ -89,7 +89,7 @@ const ReviewModal = ({ isOpen, onClose, selectedStatusButton, setSelectedStatusB
                                         sx={{ 
                                             textTransform: 'none' ,
                                         }}
-                                        className='float-right mt-[16px]'
+                                        className='float-right mt-[16px] mb-[16px]'
                                     >
                                         Kirim Ulasan
                                     </StatusButton>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Grid, Typography } from '@mui/material'
 import { clone } from 'ramda'
-import { StatusButton, ReviewButton } from './CustomButtons';
+import { StatusButton, ReviewButton } from '../../../components/CustomButtons';
 import ItemMiniDescription from "../../../components/ItemMiniDescription/ItemMiniDescription";
 
 export const tableColumns = (onChangeSelectedStatusButton: any) => {
@@ -35,7 +35,7 @@ export const tableColumns = (onChangeSelectedStatusButton: any) => {
             dataIndex: 'amount',
             render: (text: any, record: any) => {
                 return (
-                    <Typography className='text-[14px]'>{record.items[0].amounth}</Typography>
+                    <Typography className='text-[14px]'>{record.items.reduce((a: any, b: any) => a + b.amount, 0)}</Typography>
                 )
             }
         },
@@ -70,6 +70,7 @@ export const phoneTableColumn = (onChangeSelectedStatusButton: any) => {
     return {
         orderedItem: {
             render: (text: any, record: any) => {
+                console.log(record)
                 return (
                     <Grid container className='px-[16px] mb-[32px]'>
                         <Grid container item xs={3}>
@@ -78,17 +79,17 @@ export const phoneTableColumn = (onChangeSelectedStatusButton: any) => {
                         <Grid container item xs={9}>
                             <Grid item xs={12} className='flex mb-12'>
                                 <div className='w-[184px] ml-[16px]'>
-                                    <Typography className='text-[14px] inline-block w-full'>{record.name}</Typography>
-                                    <Typography className='text-[14px] inline-block font-medium'>{`Rp${record.price}`}</Typography>
+                                    <Typography className='text-[14px] inline-block w-full'>{record.items[0].name}</Typography>
+                                    <Typography className='text-[14px] inline-block font-medium'>{`Rp${record.items[0].price}`}</Typography>
                                 </div>
                             </Grid>
                             <Grid item xs={6} className='block place-items-center text-center'>
                                 <Typography className="block w-full text-[14px] text-[#4F555B]">Amount</Typography>
-                                <Typography className="block text-[14px]">{record.amount}</Typography>
+                                <Typography className="block text-[14px]">{record.items.reduce((a: any, b: any) => a + b.amount, 0)}</Typography>
                             </Grid>
                             <Grid item xs={6} className='text-right'>
                                 <Typography className="text-[16px] text-[#4F555B]">Subtotal</Typography>
-                                <Typography className='text-[16px] font-semibold block mb-[8px]'>{`Rp${record.price * record.amount}`}</Typography>
+                                <Typography className='text-[16px] font-semibold block mb-[8px]'>{`Rp${record.paymentDetails.total}`}</Typography>
                             </Grid>
                             <Grid item xs={12} className='text-right mt-[32px]'>
                                 {
