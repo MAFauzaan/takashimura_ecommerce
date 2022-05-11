@@ -14,7 +14,7 @@ import ItemCard from '../../../../components/ItemCard/ItemCard';
 
 const DetailPage = () => {
     const { windowWidth } = useDynamicScreen();
-    const { selectedSize, onChangeSelectedSize, amount, onChangeSetAmount } = useDetailItem();
+    const { selectedSize, onChangeSelectedSize, amount, onChangeSetAmount, selectedItem } = useDetailItem();
     const router = useRouter();
     const containerPadding = () => {
         if (windowWidth >= 1100) {
@@ -24,11 +24,9 @@ const DetailPage = () => {
         }
         return 'p-[16px]'
     }
-
+    console.log(selectedItem)
     const dummy = ['1', '2', '3', '4', '5', '6', '7'];
     const dummyItem = ItemsList[0].items[0];
-
-
 
     return (
         <>
@@ -36,7 +34,12 @@ const DetailPage = () => {
                 <Breadcrumbs separator=">">
                     <Link key="home" href="/" passHref={true}><Typography className='text-[16px]'>Home</Typography></Link>
                     <Link key="products" href="/products" passHref={true}><Typography className='text-[16px]'>products</Typography></Link>
-                    <Typography>{capitalizeFirstLetter(router.query.type)}</Typography>
+                    <Link href={`/products/${router.query.type}`} passHref>
+                        <Typography className='text-[16px]'>{capitalizeFirstLetter(router.query.type)}</Typography>
+                    </Link>
+                    <Link href={`/products/${router.query.detail}`} passHref>
+                        <Typography className='text-[16px]'>{capitalizeFirstLetter(router.query.detail)}</Typography>
+                    </Link>
                 </Breadcrumbs>
             </div>
             <div className={`${containerPadding()}`}>

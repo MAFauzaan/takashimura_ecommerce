@@ -8,38 +8,60 @@ export interface ICartSlice {
 
 const initialState: ICartSlice = {
     isOpened: false,
-    cartItems: [
-        {
-            id: 1,
-            itemName: 'Sarung',
-            amount: 3,
-            price: 25000,
-            subTotal: 75000
-        },
-        {
-            id: 2,
-            itemName: 'Mukena',
-            amount: 2,
-            price: 40000,
-            subTotal: 80000
-        }
-    ]
+    cartItems: [{
+        id: 1,
+        name: "Mukena Hijau",
+        description: "Ini adalah mukena hijau",
+        type: "mukena",
+        sizes: [
+          {
+            size: "S",
+            stockAmount: 25,
+            price: 25000
+          },
+          {
+            size: "M",
+            stockAmount: 10,
+            price: 27000
+          },
+          {
+            size: "L",
+            stockAmount: 23,
+            price: 28000
+          },
+          {
+            size: "XL",
+            stockAmount: 12,
+            price: 30000
+          }
+        ],
+        reviews: [
+          {
+            stars: 5,
+            description: "Mantap Gan",
+            date: "2022-05-11T13:43:08.709Z"
+          }
+        ]
+      }]
 }
 
 export const cartSlice = createSlice({
     name: 'cart',
     initialState,
     reducers: {
-        onOpenDrawer: (state) => {
+        onOpenDrawer: (state: any) => {
             state.isOpened = true
         },
-        onCloseDrawer: (state) => {
+        onCloseDrawer: (state: any) => {
             state.isOpened = false
+        },
+        onAddItem: (state: any, action: any) => {
+            state.cartItems.push(action.payload)
         }
     }
 })
 
-export const { onOpenDrawer, onCloseDrawer } = cartSlice.actions;
+export const { onOpenDrawer, onCloseDrawer, onAddItem } = cartSlice.actions;
 
 export const checkOpenDrawer = ((state: AppState) => state.cart.isOpened);
 export const checkCartItems = ((state: AppState) => state.cart.cartItems);
