@@ -5,6 +5,11 @@ import {
     AccordionDetails, Stepper, StepLabel,
     Step
 } from '@mui/material';
+import { 
+    Timeline, TimelineItem, TimelineSeparator,
+    TimelineConnector, TimelineContent, TimelineDot,
+    TimelineOppositeContent
+} from '@mui/lab'
 import ItemMiniDescription from '../../../../components/ItemMiniDescription/ItemMiniDescription';
 import CloseIcon from '@mui/icons-material/Close';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -18,6 +23,7 @@ type modal = {
 }
 
 const StatusModal = ({ isOpen, onClose, selectedStatusButton }: modal) => {
+    console.log(selectedStatusButton.shipmentStatuses.reverse())
     return (
         <Modal
             open={isOpen}
@@ -72,15 +78,20 @@ const StatusModal = ({ isOpen, onClose, selectedStatusButton }: modal) => {
                     </AccordionSummary>
                     <AccordionDetails>
                         <div className='border p-[16px] w-[440px] flex place-content-center'>
-                            <Stepper orientation='vertical'>
+                            <Timeline>
                                 {
-                                    selectedStatusButton.shipmentStatuses.reverse().map((status: any) => (
-                                        <Step key={status.id}>
-                                            <StepLabel className='text-[14px] text-[#001219] font-medium'>{status.label}</StepLabel>
-                                        </Step>
+                                    selectedStatusButton.shipmentStatuses.reverse().map((item: any, index: number) => (
+                                        <TimelineItem key={item.id}>
+                                            <TimelineOppositeContent className='text-[#4F555B] text-[12px]'>{item.date} </TimelineOppositeContent>
+                                            <TimelineSeparator>
+                                                <TimelineDot color={index === 0 ? 'success' : undefined }/>
+                                                <TimelineConnector />
+                                            </TimelineSeparator>
+                                            <TimelineContent className='text-[#001219] text-[12px]'>{item.label}</TimelineContent>
+                                        </TimelineItem>
                                     ))
                                 }
-                            </Stepper>
+                            </Timeline>
                         </div>
                     </AccordionDetails>
                 </Accordion>
@@ -130,7 +141,7 @@ const StatusModal = ({ isOpen, onClose, selectedStatusButton }: modal) => {
                     </Grid>
                 </div>
                 <div className='bg-[#F8F9FA] h-[16px]' />
-                <div className='px-[24px] py-[16px]'>
+                <div className='px-[24px] pt-[16px] pb-[40px]'>
                     <Typography className='text-[14px] text-[#001219] font-semibold mb-[16px]'>Rincian Pembayaran</Typography>
                     <Grid container>
                         <Grid container item className='mb-[16px]'>
