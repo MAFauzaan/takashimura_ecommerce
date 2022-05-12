@@ -11,9 +11,10 @@ const { Text } = Typography;
 
 interface IitemList {
     checked: any,
+    onChangeSelectedItem: any
 }
 
-const ItemsList = ({ checked }: IitemList) => {
+const ItemsList = ({ checked, onChangeSelectedItem }: IitemList) => {
     const router = useRouter();
     const { asPath } = router;
     const { windowWidth } = useDynamicScreen();
@@ -26,7 +27,7 @@ const ItemsList = ({ checked }: IitemList) => {
                     return (
                         <Link key={item.id} href={`${asPath}/${item.id}`} passHref={true}>
                             <Col span={windowWidth >= 1280 ? 6 : 8}>
-                                <ItemCard item={item} />
+                                <ItemCard item={item} onChangeSelectedItem={onChangeSelectedItem}/>
                             </Col>
                         </Link>
                     )

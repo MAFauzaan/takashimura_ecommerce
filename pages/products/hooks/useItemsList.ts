@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
+import { setUserSelectedItem } from '../../../store/reducers/userSlice';
+import { useDispatch } from 'react-redux';
 
 export const useItemsList = () => {
-   
+    const dispatch = useDispatch();
     const [ checkedList, setCheckedList ] = useState<any>('Mukena');
     const [ sortFromCheapest, setSortFromCheapest] = useState<number | string>('');
     const [ sortFromMostExpensive, setSortFromMostExpensive] = useState<number | string>('');
-    const [ page, setPage  ] = useState<any>('')
+    const [ page, setPage  ] = useState<any>('');
 
     const onChangeCheckedList = (value: any) => {
         if (value.length > 1) {
@@ -31,7 +33,9 @@ export const useItemsList = () => {
         setPage(page)
     }
 
-    console.log(page)
+    const onChangeSelectedItem = (selectedItem: any) => {
+        dispatch(setUserSelectedItem(selectedItem))
+    }
     
     return {
         checkedList,
@@ -41,7 +45,8 @@ export const useItemsList = () => {
         onChangeCheckedList,
         onChangeSortFromCheapest,
         onChangeSortFromMostExpensive,
-        onChangePage
+        onChangePage,
+        onChangeSelectedItem
     }
 
 }

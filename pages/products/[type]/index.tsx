@@ -14,7 +14,7 @@ const ProductsPage = () => {
         checkedList, onChangeCheckedList,
         sortFromMostExpensive, sortFromCheapest,
         onChangeSortFromCheapest, onChangeSortFromMostExpensive,
-        onChangePage, page
+        onChangePage, page, onChangeSelectedItem
     } = useItemsList();
 
     const listName = dataList.map((item: IitemList) => item.name)
@@ -195,7 +195,7 @@ const ProductsPage = () => {
                                     </div>
                                 </Grid>
                                 <Grid item xs={9}>
-                                    <ItemsList checked={checkedList} />
+                                    <ItemsList checked={checkedList} onChangeSelectedItem={onChangeSelectedItem}/>
                                 </Grid>
                             </Grid>
                         </>
@@ -208,7 +208,7 @@ const ProductsPage = () => {
                             </Grid>
                             <Grid container>
                                 <Grid item xs={12}>
-                                    <ItemsList checked={checkedList} />
+                                    <ItemsList checked={checkedList} onChangeSelectedItem={onChangeSelectedItem}/>
                                 </Grid>
                             </Grid>
                         </div>
