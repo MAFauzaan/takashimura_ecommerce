@@ -9,7 +9,7 @@ import { useDynamicScreen } from '../../common/hooks/useDynamicScreen'
 const CartDetail = () => {
     const { windowWidth } = useDynamicScreen();
     const cartItems = useAppSelector(checkCartItems);
-    const subtotal = cartItems.reduce((a, b) => a.subTotal + b.subTotal);
+    const subtotal = 'cartItems.reduce((a, b) => a.subTotal + b.subTotal)';
 
     return (
         <>

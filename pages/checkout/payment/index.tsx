@@ -10,7 +10,7 @@ const CheckoutPageInformation = () => {
     
     return (
         <div className={windowWidth < 800 ? 'py-[16px] px-[16px]' : 'py-[50px] px-[120px]'}>
-        <CheckoutHeader step={1} />
+        <CheckoutHeader step={2} />
         <Grid container>
             {
                 windowWidth < 800 ?
