@@ -1,12 +1,15 @@
 import React from 'react';
-import { Collapse, Checkbox, Pagination } from 'antd';
-import { Grid, TextField, Typography, InputAdornment } from '@mui/material';
+import {
+    Grid, TextField, Typography,
+    AccordionSummary,  AccordionDetails, FormControlLabel, 
+    FormGroup, Checkbox, Pagination
+} from '@mui/material';
+import { ExpandMoreOutlined } from '@mui/icons-material'
 import { useDynamicScreen } from '../../../common/hooks/useDynamicScreen';
 import { ItemsList as dataList, IitemList } from '../../../DUMMY/OptionsList';
 import { useItemsList } from '../hooks/useItemsList';
 import ItemsList from '../components/ItemsList';
-
-const { Panel } = Collapse;
+import { CustomAccordion } from '../components/CustomAccordion';
 
 const ProductsPage = () => {
     const { windowWidth } = useDynamicScreen();
@@ -26,53 +29,46 @@ const ProductsPage = () => {
                 windowWidth < 800 &&
                 <Grid container>
                     <Grid item xs={6}>
-                        <Collapse
-                            expandIconPosition="right"
-                        >
-                            <Panel
-                                header={
-                                    <>
-                                        <Typography className='text-[16px] text-[#001219] font-semibold'>Keranjang</Typography>
-                                    </>
-                                }
-                                key="1"
+                        <CustomAccordion>
+                            <AccordionSummary
+                                expandIcon={<ExpandMoreOutlined />}
+                                id='item-detail'
                             >
-                                <Checkbox.Group options={listName} value={checkedList} onChange={onChangeCheckedList}>
+                                <Typography className='text-[16px] font-semibold'>Kategori</Typography>
+                            </AccordionSummary>
+                            <AccordionDetails sx={{ paddingTop: 0 }}>
+                                <FormGroup>
                                     {
-                                        listName.map((listItem: any) => (
-                                            <Grid container key={listItem}>
-                                                <Grid item xs={12}>
-                                                    <Checkbox value={listItem} onClick={onChangeCheckedList}>{listItem}</Checkbox>
-                                                </Grid>
-                                            </Grid>
+                                        listName.map((item: any) => (
+                                            <FormControlLabel 
+                                                key={item} 
+                                                control={<Checkbox />} 
+                                                label={<Typography className='text-[14px]'>{item}</Typography>} 
+                                                sx={{ fontSize: '16px' }} 
+                                            />
                                         ))
                                     }
-                                </Checkbox.Group>
-                            </Panel>
-                        </Collapse>
+                                </FormGroup>
+                            </AccordionDetails>
+                        </CustomAccordion>
                     </Grid>
                     <Grid xs={6}>
-                        <Collapse
-                            defaultActiveKey={['1']}
-                            expandIconPosition="right"
-                        >
-                            <Panel
-                                header={
-                                    <>
-                                        <Typography className='text-[16px] text-[#001219] font-semibold'>Sortir</Typography>
-                                    </>
-                                }
-                                key="1"
+                        <CustomAccordion>
+                            <AccordionSummary
+                                expandIcon={<ExpandMoreOutlined />}
+                                id='item-detail'
                             >
+                                <Typography className='text-[16px] font-semibold'>Sortir</Typography>
+                            </AccordionSummary>
+                            <AccordionDetails>
                                 <TextField
-                                    placeholder='Harga Termurah'
+                                    fullWidth
+                                    placeholder='Dari Harga Termurah'
                                     value={sortFromCheapest}
                                     onChange={onChangeSortFromCheapest}
-                                    className='mb-[20px]'
+                                    inputProps={{style: {fontSize: 14}}}
                                     variant='outlined'
-                                    InputProps={{
-                                        startAdornment: <InputAdornment position="start">Rp</InputAdornment>,
-                                    }}
+                                    className='mb-[16px]'
                                     sx={{
                                         "& label.Mui-focused": {
                                             display: "none"
@@ -83,13 +79,13 @@ const ProductsPage = () => {
                                     }}
                                 />
                                 <TextField
-                                    placeholder='Harga Termahal'
+                                    fullWidth
+                                    placeholder='Dari Harga Termahal'
                                     value={sortFromMostExpensive}
                                     onChange={onChangeSortFromMostExpensive}
+                                    inputProps={{style: {fontSize: 14}}}
                                     variant='outlined'
-                                    InputProps={{
-                                        startAdornment: <InputAdornment position="start">Rp</InputAdornment>,
-                                    }}
+                                    className='mb-[16px]'
                                     sx={{
                                         "& label.Mui-focused": {
                                             display: "none"
@@ -99,8 +95,8 @@ const ProductsPage = () => {
                                         }
                                     }}
                                 />
-                            </Panel>
-                        </Collapse>
+                            </AccordionDetails>
+                        </CustomAccordion>
                     </Grid>
                 </Grid>
             }
@@ -116,54 +112,38 @@ const ProductsPage = () => {
                             <Grid container>
                                 <Grid item xs={3}>
                                     <div className='w-[200px]'>
-                                        <Collapse
-                                            defaultActiveKey={['1']}
-                                            expandIconPosition="right"
-                                            className='mt-[40px]'
-                                        >
-                                            <Panel
-                                                header={
-                                                    <>
-                                                        <Typography className='text-[16px] text-[#001219] font-semibold'>Keranjang</Typography>
-                                                    </>
-                                                }
-                                                key="1"
+                                        <CustomAccordion className='mb-[32px]'>
+                                            <AccordionSummary
+                                                expandIcon={<ExpandMoreOutlined />}
+                                                id='item-detail'
                                             >
-                                                <Checkbox.Group options={listName} value={checkedList} onChange={onChangeCheckedList}>
+                                                <Typography className='text-[16px] font-semibold'>Kategori</Typography>
+                                            </AccordionSummary>
+                                            <AccordionDetails sx={{ paddingTop: 0 }}>
+                                                <FormGroup>
                                                     {
-                                                        listName.map((listItem: any) => (
-                                                            <Grid container key={listItem}>
-                                                                <Grid item xs={12}>
-                                                                    <Checkbox value={listItem} onClick={onChangeCheckedList}>{listItem}</Checkbox>
-                                                                </Grid>
-                                                            </Grid>
+                                                        listName.map((item: any) => (
+                                                            <FormControlLabel key={item} control={<Checkbox />} label={item} sx={{ fontSize: '16px' }} />
                                                         ))
                                                     }
-                                                </Checkbox.Group>
-                                            </Panel>
-                                        </Collapse>
-                                        <Collapse
-                                            defaultActiveKey={['1']}
-                                            expandIconPosition="right"
-                                            className='mt-[20px]'
-                                        >
-                                            <Panel
-                                                header={
-                                                    <>
-                                                        <Typography className='text-[16px] text-[#001219] font-semibold'>Sortir</Typography>
-                                                    </>
-                                                }
-                                                key="1"
+                                                </FormGroup>
+                                            </AccordionDetails>
+                                        </CustomAccordion>
+                                        <CustomAccordion>
+                                            <AccordionSummary
+                                                expandIcon={<ExpandMoreOutlined />}
+                                                id='item-detail'
                                             >
+                                                <Typography className='text-[16px] font-semibold'>Sortir</Typography>
+                                            </AccordionSummary>
+                                            <AccordionDetails>
                                                 <TextField
-                                                    placeholder='Harga Termurah'
+                                                    fullWidth
+                                                    placeholder='Dari Harga Termurah'
                                                     value={sortFromCheapest}
                                                     onChange={onChangeSortFromCheapest}
-                                                    className='mb-[20px]'
                                                     variant='outlined'
-                                                    InputProps={{
-                                                        startAdornment: <InputAdornment position="start">Rp</InputAdornment>,
-                                                    }}
+                                                    className='mb-[16px]'
                                                     sx={{
                                                         "& label.Mui-focused": {
                                                             display: "none"
@@ -174,13 +154,12 @@ const ProductsPage = () => {
                                                     }}
                                                 />
                                                 <TextField
-                                                    placeholder='Harga Termahal'
+                                                    fullWidth
+                                                    placeholder='Dari Harga Termurah'
                                                     value={sortFromMostExpensive}
                                                     onChange={onChangeSortFromMostExpensive}
                                                     variant='outlined'
-                                                    InputProps={{
-                                                        startAdornment: <InputAdornment position="start">Rp</InputAdornment>,
-                                                    }}
+                                                    className='mb-[16px]'
                                                     sx={{
                                                         "& label.Mui-focused": {
                                                             display: "none"
@@ -190,12 +169,12 @@ const ProductsPage = () => {
                                                         }
                                                     }}
                                                 />
-                                            </Panel>
-                                        </Collapse>
+                                            </AccordionDetails>
+                                        </CustomAccordion>
                                     </div>
                                 </Grid>
                                 <Grid item xs={9}>
-                                    <ItemsList checked={checkedList} onChangeSelectedItem={onChangeSelectedItem}/>
+                                    <ItemsList checked={checkedList} onChangeSelectedItem={onChangeSelectedItem} />
                                 </Grid>
                             </Grid>
                         </>
@@ -208,16 +187,17 @@ const ProductsPage = () => {
                             </Grid>
                             <Grid container>
                                 <Grid item xs={12}>
-                                    <ItemsList checked={checkedList} onChangeSelectedItem={onChangeSelectedItem}/>
+                                    <ItemsList checked={checkedList} onChangeSelectedItem={onChangeSelectedItem} />
                                 </Grid>
                             </Grid>
                         </div>
                 }
                 <Pagination
-                    current={page}
+                    count={5}
+                    size='medium'
+                    color='secondary'
                     onChange={onChangePage}
-                    total={50}
-                    className="mt-[44px] text-right"
+                    className="mt-[44px] text-[14px]"
                 />
             </div>
         </>

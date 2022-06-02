@@ -4,6 +4,9 @@ export const theme = createTheme({
     palette: {
         primary: {
             main: '#BD0029'
+        },
+        secondary: {
+            main: '#BD0029'
         }
     },
     typography: {
@@ -11,5 +14,8 @@ export const theme = createTheme({
         allVariants: {
             color: '#001219'
         }
+    },
+    shape: {
+        borderRadius: 0
     },
 })

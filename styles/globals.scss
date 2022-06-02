@@ -40,11 +40,11 @@ body {
   box-shadow: none !important;
 }
 
-.ant-drawer-content {
-  height: calc(100vh - 64.2px) !important;
-  position: absolute;
-  bottom: 0;
-}
+// .ant-drawer-content {
+//   height: calc(100vh - 64.2px) !important;
+//   position: absolute;
+//   bottom: 0;
+// }
 
 .ant-checkbox-group-item {
   display: block;
@@ -72,3 +72,21 @@ body {
   // border-color: #BD0029 !important;
 }
 
+.css-vmtmad-MuiPaper-root-MuiAccordion-root:last-of-type {
+  border-radius: 0;
+}
+
+.MuiPagination-root ul{
+  justify-content: end;
+
+  li {
+    height: 32px;
+    width: 32px;
+    font-size: 14px;
+    border-radius: 50%;
+  }
+}
+
+.MuiButtonBase-root {
+  font-size: 14px;
+}

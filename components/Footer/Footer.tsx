@@ -22,7 +22,7 @@ export const Footer = () => {
                         <Grid item xs={2} />
                         <Divider className="" />
                         <Grid item xs={12} >
-                            <Typography>Copyright 2022©, All right Reserved</Typography>
+                            <Typography className="text-[16px] text-center">Copyright 2022©, All right Reserved</Typography>
                         </Grid>
                     </Grid>
                     :

@@ -37,7 +37,6 @@ const Cart = () => {
             width={windowWidth > 600 ? 556 : 380}
             onClose={() => dispatch(onCloseDrawer())}
             visible={isCartOpened}
-            mask={false}
         >
             <div className='relative h-full w-full'>
                 <div className='flex px-[16px] py-[20px] place-content-center font-semibold relative'>

@@ -27,7 +27,7 @@ const itemsCategories = [
 
 const ProductsPage = () => {
     return (
-        <div className='flex place-items-center justify-center p-[60px]'>
+        <div className='flex place-items-center justify-center p-[60px] min-h-[calc(100vh-(64px+118px))]'>
             <Grid container className='flex justify-center' spacing={2}>
                 {
                     itemsCategories.map((item: any) => (

@@ -8,6 +8,7 @@ import style from './_Header.module.scss'
 import CustomDrawer from './CustomDrawer';
 import { useHeader } from './useHeader';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 export const Header = () => {
     const dispatch = useDispatch();
@@ -37,8 +38,12 @@ export const Header = () => {
                     windowWidth > 768 ?
                         <>
                             <Grid item sm={4} className="flex place-items-center justify-center h-[64px]">
-                                <Typography className="text-[16px] mr-16">Jelajahi</Typography>
-                                <Typography className="text-[16px]">Produk</Typography>
+                                <Link href="/" passHref>
+                                    <Typography className="text-[16px] mr-16 cursor-pointer">Jelajahi</Typography>
+                                </Link>
+                                <Link href="/products" passHref>
+                                    <Typography className="text-[16px] cursor-pointer">Produk</Typography>
+                                </Link>
                             </Grid>
                             <Grid item sm={4} className="text-center flex place-items-center place-content-center h-[64px]">
                                 <div className={`${style.logoTop} absolute top-[25px] hover: cursor-pointer`} onClick={() => replace('/')} />
