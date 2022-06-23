@@ -19,13 +19,13 @@ const CheckoutPageInformation = () => {
                         <Grid item xs={windowWidth < 800 ? 12 : 6}>
                             <CartDetail />
                         </Grid>
-                        <Grid item xs={windowWidth < 800 ? 12 : 6} className="py-[16px] px-[32px]">
+                        <Grid item xs={windowWidth < 800 ? 12 : 6} className="py-[16px] px-[32px] relative">
                             <Payment />
                         </Grid>
                     </>
                     :
                     <>
-                        <Grid item xs={windowWidth < 800 ? 12 : 6} className="py-[16px] px-[32px]">
+                        <Grid item xs={windowWidth < 800 ? 12 : 6} className="py-[16px] px-[32px] relative">
                             <Payment />
                         </Grid>
                         <Grid item xs={windowWidth < 800 ? 12 : 6}>

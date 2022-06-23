@@ -14,8 +14,6 @@ import "swiper/css/pagination";
 import style from '../styles/_index.module.scss'
 import ItemCard from '../components/ItemCard/ItemCard';
 
-const { Option } = Select;
-
 interface IdisplayImage {
   name: string,
   imgUrl: string
@@ -26,9 +24,24 @@ interface ISelectedOption {
   description: any
 }
 
-const Home: NextPage = () => {
+export async function getStaticProps() {
+  const response = await fetch('http://localhost:5000/get-products', {
+    method: 'GET',
+    headers: { "Content-Type": "application/json" },
+  });
+  const result = await response.json();
+
+  return {
+    props: {
+      data: result.data
+    }
+  };
+};
+
+const Home: NextPage = ({data}: any) => {
   const { windowWidth } = useDynamicScreen();
-  const { replace } = useRouter();
+  const { replace, push } = useRouter();
+  const slicedProducts = data.slice(0, 8);
 
   const [selected, setSelected] = useState<ISelectedOption>({
     name: 'Mukena',
@@ -80,7 +93,6 @@ const Home: NextPage = () => {
                     <Typography className='text-[24px] block'>{item.name}</Typography>
                     <Typography className='text-[16px]'>{item.description}</Typography>
                   </div>
-                  {index !== ItemsList.length - 1 && index !== ItemsList.length - 2 && <Divider />}
                 </Grid>
               ))
             }
@@ -155,6 +167,10 @@ const Home: NextPage = () => {
     setSelected({ name, description })
   }
 
+  const onChangeSelectedItem = (item: any) => {
+    push(`/products/${item.category}/${item.productid}`)
+  }
+
   return (
     <>
       <div className={`${style.hero} h-[calc(100vh_-_64px)] w-full bg-gray-500 hero flex place-content-center place-items-center text-center`} >
@@ -216,10 +232,10 @@ const Home: NextPage = () => {
             className='mb-[64px]'
           >
             {
-              ItemsList[0].items.map((item: any) => {
+              slicedProducts.map((item: any) => {
                 return (
                   <SwiperSlide key={item.id} className='flex place-content-center place-items-center'>
-                    <ItemCard item={item} />
+                    <ItemCard item={item} onChangeSelectedItem={onChangeSelectedItem}/>
                   </SwiperSlide>
                 )
               })

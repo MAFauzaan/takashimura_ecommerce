@@ -10,9 +10,12 @@ export const theme = createTheme({
         }
     },
     typography: {
-        fontFamily: 'work-sans',
+        fontFamily: 'work-sans, sans-serif',
         allVariants: {
             color: '#001219'
+        },
+        button: {
+            textTransform: 'none'
         }
     },
     shape: {

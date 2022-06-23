@@ -10,7 +10,7 @@ const CartDetail = () => {
     const { windowWidth } = useDynamicScreen();
     const cartItems = useAppSelector(checkCartItems);
     const subtotal = cartItems.reduce((a, b) => a.subTotal + b.subTotal);
-
+    console.log(cartItems)
     return (
         <>
             {
@@ -26,7 +26,7 @@ const CartDetail = () => {
                             </div>
                         </AccordionSummary>
                         <AccordionDetails>
-                            <div className='bg-[#F8F9FA] min-h-[700px] w-full overflow-y-auto pb-[32px] px-[16px]'>
+                            {/* <div className='bg-[#F8F9FA] min-h-[700px] w-full overflow-y-auto pb-[32px] px-[16px]'>
                                 {
                                     cartItems.map((item: any) => {
                                         return (
@@ -77,12 +77,12 @@ const CartDetail = () => {
                                         </Grid>
                                     </Grid>
                                 </div>
-                            </div>
+                            </div> */}
                         </AccordionDetails>
                     </Accordion>
                     :
                     <div className='bg-[#F8F9FA] min-h-[700px] w-full overflow-y-auto py-[32px] px-[16px] mt-[45px]'>
-                        {
+                        {/* {
                             cartItems.map((item: any) => {
                                 return (
                                     <Grid container key={item.id} className='mb-[16px]'>
@@ -103,8 +103,8 @@ const CartDetail = () => {
                                     </Grid>
                                 )
                             })
-                        }
-                        <div className='border-t-2 border-b-2 py-[16px]'>
+                        } */}
+                        {/* <div className='border-t-2 border-b-2 py-[16px]'>
                             <Grid container>
                                 <Grid item xs={6}>
                                     <Typography className='text-[16px] text-left'>Subtotal</Typography>
@@ -121,8 +121,8 @@ const CartDetail = () => {
                                     <Typography className='text-[16px] text-right'>Gratis</Typography>
                                 </Grid>
                             </Grid>
-                        </div>
-                        <div className='mt-[24px]'>
+                        </div> */}
+                        {/* <div className='mt-[24px]'>
                             <Grid container className='text-[16px] font-semibold'>
                                 <Grid item xs={6} className='text-left'>
                                     <Typography className='text-[16px]'>Total Biaya</Typography>
@@ -131,7 +131,7 @@ const CartDetail = () => {
                                     <Typography className='text-[16px]'>{subtotal}</Typography>
                                 </Grid>
                             </Grid>
-                        </div>
+                        </div> */}
                     </div>
             }
         </>

@@ -2,6 +2,7 @@ import React from 'react';
 import { Divider } from 'antd';
 import { Grid, Typography } from '@mui/material';
 import { useRouter } from 'next/router';
+import { PrimaryRightButton } from '../Buttons/CheckoutButtons';
 
 const Payment = () => {
 
@@ -63,16 +64,10 @@ const Payment = () => {
                 {/* SHOULD BE DYNAMIC */}
 
             </div>
-            <Grid container className='mt-[250px]'>
-                <Grid item xs={6}>
-                    <div className='w-11/12 bg-[#BD0029] font-semibold text-center h-[48px] flex place-items-center justify-center cursor-pointer hover:bg-[#c52f4f]'>
-                        <Typography className='text-[#ffff] text-[16px] '>Selesaikan Pemesanan</Typography>
-                    </div>
-                </Grid>
-                <Grid item xs={6} className='flex place-items-center justify-start'>
-                    <Typography className='text-[16px] font-semibold hover:cursor-pointer' onClick={onBack}>Sebelumnya</Typography>
-                </Grid>
-            </Grid>
+            <div className='flex place-items-center absolute bottom-4 gap-8'>
+                <PrimaryRightButton className='bg-[#BD0029] hover:bg-[#cb002c]' onClick={onNextPage}>Lanjutkan ke Pengiriman</PrimaryRightButton>
+                <Typography className='text-[16px] font-semibold hover:cursor-pointer' onClick={onBack}>Sebelumnya</Typography>
+            </div>
         </div>
     )
 }

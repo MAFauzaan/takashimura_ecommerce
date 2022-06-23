@@ -12,7 +12,7 @@ export const useDetailItem = () => {
     }
 
     const onChangeSetAmount = (type: any) => {
-        console.log(type)
+        console.log(type)                                                                                                                                                                               
         if (type === 'addition') {
             setAmount(amount + 1)
         } else if (amount !== 0) {

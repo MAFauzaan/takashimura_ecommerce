@@ -2,6 +2,7 @@ import React from 'react';
 import { Divider, Checkbox } from 'antd';
 import { Grid, Typography } from '@mui/material';
 import { useRouter } from 'next/router';
+import { PrimaryRightButton } from '../Buttons/CheckoutButtons';
 
 const Shipment = () => {
 
@@ -16,7 +17,7 @@ const Shipment = () => {
     };
 
     return (
-        <div>
+        <div className='h-full relative'>
             <div className='text-[16px] font-semibold mt-[50px]'>
                 <Typography className='text-[16px] font-semibold'>Informasi Pengiriman</Typography>
             </div>
@@ -61,19 +62,10 @@ const Shipment = () => {
                 </Grid>
                 <Divider />
             </div>
-            <Grid container className='mt-[250px]'>
-                <Grid item xs={6}>
-                    <div 
-                        className='w-11/12 bg-[#BD0029] font-semibold text-center h-[48px] flex place-items-center justify-center cursor-pointer hover:bg-[#c52f4f]'
-                        onClick={onNextPage}   
-                    >
-                        <Typography className='text-[#ffff] text-[16px] '>Lanjutkan ke Pembayaran</Typography>
-                    </div>
-                </Grid>
-                <Grid item xs={6} className='flex place-items-center justify-start'>
-                    <Typography className='text-[16px] font-semibold hover:cursor-pointer' onClick={onBack}>Sebelumnya</Typography>
-                </Grid>
-            </Grid>
+            <div className='flex place-items-center absolute bottom-10 gap-8'>
+                <PrimaryRightButton className='bg-[#BD0029] hover:bg-[#cb002c]' onClick={onNextPage}>Lanjutkan ke Pengiriman</PrimaryRightButton>
+                <Typography className='text-[16px] font-semibold hover:cursor-pointer' onClick={onBack}>Sebelumnya</Typography>
+            </div>
         </div>
     )
 }

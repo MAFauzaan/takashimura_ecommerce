@@ -40,6 +40,7 @@ export const userSlice = createSlice({
 export const { setUserSelectedItem } = userSlice.actions;
 
 export const checkUserData = ((state: AppState) => state.user.userData);
+export const checkIsLoggedIn = ((state: AppState) => state.user.isLoggedIn)
 export const checkSelectedItem = ((state: AppState) => state.user.userSelectedItem);
 
 export default userSlice.reducer

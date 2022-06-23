@@ -5,14 +5,31 @@ import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { Swiper, SwiperSlide } from "swiper/react";
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import "swiper/css";
 import { useDynamicScreen } from '../../../../common/hooks/useDynamicScreen';
 import { useDetailItem } from '../../hooks/useDetailItem';
 import { capitalizeFirstLetter } from '../../../../common/helpers/textHelpers';
 import { Ireviews, ItemsList } from '../../../../DUMMY/OptionsList';
-import "swiper/css";
 import ItemCard from '../../../../components/ItemCard/ItemCard';
 
-const DetailPage = () => {
+export async function getServerSideProps(context: any) {
+    const { params } = context;
+    const { detail } = params
+    const response = await fetch(`http://localhost:5000/get-product/${detail}`, {
+      method: 'GET',
+      headers: { "Content-Type": "application/json" },
+    });
+    const result = await response.json();
+  
+    return {
+      props: {
+        data: result.data.rows
+      }
+    };
+  };
+  
+
+const DetailPage = ({data}: any) => {
     const { windowWidth } = useDynamicScreen();
     const { selectedSize, onChangeSelectedSize, amount, onChangeSetAmount, selectedItem } = useDetailItem();
     const router = useRouter();
@@ -24,10 +41,9 @@ const DetailPage = () => {
         }
         return 'p-[16px]'
     }
-    console.log(selectedItem)
     const dummy = ['1', '2', '3', '4', '5', '6', '7'];
     const dummyItem = ItemsList[0].items[0];
-
+    console.log(data, 'dataz')
     return (
         <>
             <div className='bg-[#F8F9FA] text-center h-[32px] flex place-content-center place-items-center'>
@@ -172,15 +188,15 @@ const DetailPage = () => {
                 }
                 className='mb-[64px]'
             >
-                {
+                {/* {
                     ItemsList.map((item: any) => {
                         return (
                             <SwiperSlide key={item.id} className='flex place-content-center place-items-center'>
-                                <ItemCard item={dummyItem} />
+                                <ItemCard item={dummyItem} onChangeSelectedItem={() => {}}/>
                             </SwiperSlide>
                         )
                     })
-                }
+                } */}
             </Swiper>
         </>
     )

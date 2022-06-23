@@ -1,26 +1,32 @@
 import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
 import { Grid, Typography } from '@mui/material'
 import { useDynamicScreen } from "../../common/hooks/useDynamicScreen";
-import { SearchOutlined, ShoppingOutlined, MenuOutlined, CloseOutlined } from '@ant-design/icons'
+import { SearchOutlined, MenuOutlined, CloseOutlined } from '@ant-design/icons'
+import { AccountCircleOutlined, ShoppingBagOutlined } from '@mui/icons-material';
 import { useDispatch } from 'react-redux';
-import { onOpenDrawer as openCart, onCloseDrawer as closeCart } from '../../store/reducers/cartSlice';
-import style from './_Header.module.scss'
+import { useRouter } from 'next/router';
+import { onOpenDrawer as openCart, onCloseDrawer as closeCart, checkCartItems } from '../../store/reducers/cartSlice';
+import Link from 'next/link';
 import CustomDrawer from './CustomDrawer';
 import { useHeader } from './useHeader';
-import { useRouter } from 'next/router';
-import Link from 'next/link';
+import { useAppSelector } from '../../store/hooks';
+import style from './_Header.module.scss'
+import { checkIsLoggedIn } from '../../store/reducers/userSlice';
 
 export const Header = () => {
     const dispatch = useDispatch();
     const router = useRouter();
     const { replace } = router;
     const { openDrawer, onOpenDrawer, onCloseDrawer } = useHeader();
+    const isLoggedIn = useAppSelector(checkIsLoggedIn);
+    const cartItemsAmount = useAppSelector(checkCartItems);
 
     const { windowWidth } = useDynamicScreen();
 
     const TotalItemCart = () => (
-        <div className="bg-[#BD0029] h-[24px] w-[24px] rounded-full inline-block items-center justify-center">
-            <p className="text-2xl text-white !text-center">0</p>
+        <div className='w-6 h-6 flex place-items-center justify-center bg-[#BD0029] text-white rounded-full'>
+            <p className='text-[16px]'>{cartItemsAmount.length}</p>
         </div>
     )
 
@@ -35,70 +41,62 @@ export const Header = () => {
         <>
             <Grid container className='h-[64px]'>
                 {
-                    windowWidth > 768 ?
+                    windowWidth > 600 ?
                         <>
-                            <Grid item sm={4} className="flex place-items-center justify-center h-[64px]">
-                                <Link href="/" passHref>
-                                    <Typography className="text-[16px] mr-16 cursor-pointer">Jelajahi</Typography>
-                                </Link>
-                                <Link href="/products" passHref>
-                                    <Typography className="text-[16px] cursor-pointer">Produk</Typography>
-                                </Link>
+                            <Grid item sm={4} className="flex place-items-center justify-center h-[64px] gap-10">
+                                {
+                                    isLoggedIn &&
+                                    <>
+                                        <Link href="/" passHref>
+                                            <Typography className="text-[16px] cursor-pointer">Jelajahi</Typography>
+                                        </Link>
+                                        <Link href="/products" passHref>
+                                            <Typography className="text-[16px] cursor-pointer">Produk</Typography>
+                                        </Link>
+                                    </>
+                                }
                             </Grid>
                             <Grid item sm={4} className="text-center flex place-items-center place-content-center h-[64px]">
                                 <div className={`${style.logoTop} absolute top-[25px] hover: cursor-pointer`} onClick={() => replace('/')} />
                             </Grid>
-                            <Grid item sm={4} className="text-center flex justify-center items-center h-[64px]">
-                                <div className="mr-[24px] flex">
-                                    <Typography className="text-[16px] mr-4 hover:cursor-pointer" onClick={onOpenCart}>Keranjang</Typography>
+                            <Grid item sm={4} className="text-center flex justify-center items-center gap-5 h-[64px]">
+                                <div className="flex place-items-center">
+                                    <Typography className="text-[16px] mr-2 hover:cursor-pointer" onClick={onOpenCart}>Keranjang</Typography>
                                     <TotalItemCart />
                                 </div>
-                                <Typography className="text-[16px] mr-4">Masuk</Typography>
-                                <SearchOutlined className="text-4xl" />
+                                {
+                                    isLoggedIn ?
+                                        <Link href="/account" passHref>
+                                            <AccountCircleOutlined className='!text-[25px] cursor-pointer' />
+                                        </Link>
+                                        :
+                                        <Link href="/login" passHref>
+                                            <Typography className="text-[16px] mr-4 cursor-pointer">Masuk</Typography>
+                                        </Link>
+                                }
+                                <SearchOutlined className="text-2xl" />
                             </Grid>
                         </>
                         :
-                        windowWidth > 600 && windowWidth < 769 ?
-                            <>
-                                <Grid item sm={4} className="flex place-items-center justify-center h-[64px]">
-                                    <Typography className="text-[16px] mr-16">Jelajahi</Typography>
-                                    <Typography className="text-[16px]">Produk</Typography>
-                                </Grid>
-                                <Grid item sm={4} className="text-center flex place-items-center place-content-center h-[64px]">
-                                    <div className={`${style.logoTop} absolute top-[25px] hover: cursor-pointer`} onClick={() => replace('/')} />
-                                </Grid>
-                                <Grid item sm={4} className="text-center h-[64px] flex" justifyContent='end' justifyItems='center'>
-                                    <div className="mr-[24px] flex place-items-center">
-                                        <ShoppingOutlined className="text-4xl mr-[5px] hover:cursor-pointer" onClick={onOpenCart} />
-                                        <TotalItemCart />
-                                        <Typography className="text-[16px] mr-4 ml-4">Masuk</Typography>
-                                        <SearchOutlined className="text-4xl ml-" />
-                                    </div>
-                                </Grid>
-                            </>
-                            :
-                            windowWidth <= 600 ?
-                                <>
-                                    <Grid item xs={4}>
-                                        {
-                                            openDrawer ?
-                                                <CloseOutlined className="text-4xl relative bottom-[1px] ml-[21px]" onClick={onCloseDrawer} />
-                                                :
-                                                <MenuOutlined className="text-4xl relative bottom-[1px] ml-[21px]" onClick={onOpenDrawer} />
-                                        }
-                                    </Grid>
-                                    <Grid item xs={4} className="text-center flex place-items-center place-content-center">
-                                        <div className={`${style.logoTop} absolute top-[25px]`} onClick={() => replace('/')} />
-                                    </Grid>
-                                    <Grid item xs={4} className="text-right">
-                                        <div className="mr-[24px]">
-                                            <ShoppingOutlined className="text-4xl mr-[5px] hover:cursor-pointer" onClick={onOpenCart} />
-                                            <TotalItemCart />
-                                        </div>
-                                    </Grid>
-                                </>
-                                :
-                                null
+                        <>
+                            <Grid item xs={4}>
+                                {
+                                    openDrawer ?
+                                        <CloseOutlined className="text-4xl relative bottom-[1px] ml-[21px]" onClick={onCloseDrawer} />
+                                        :
+                                        <MenuOutlined className="text-4xl relative bottom-[1px] ml-[21px]" onClick={onOpenDrawer} />
+                                }
+                            </Grid>
+                            <Grid item xs={4} className="text-center flex place-items-center place-content-center">
+                                <div className={`${style.logoTop} absolute top-[25px]`} onClick={() => replace('/')} />
+                            </Grid>
+                            <Grid item xs={4} className="text-right">
+                                <div className="flex place-items-center justify-center h-16">
+                                    <ShoppingBagOutlined className="text-4xl mr-[5px] hover:cursor-pointer" onClick={onOpenCart} />
+                                    <TotalItemCart />
+                                </div>
+                            </Grid>
+                        </>
                 }
             </Grid>
             {
