@@ -14,10 +14,10 @@ export const Footer = () => {
                             <Image src='/brand-footer1.png' alt="brand-footer" height="40px" width="213px" />
                         </Grid>
                         <Grid item xs={8} className='text-center flex justify-center'>
-                            <Typography className="mr-24 text-[16px]">Mukena</Typography>
-                            <Typography className="mr-24 text-[16px]">Daster</Typography>
-                            <Typography className="mr-24 text-[16px]">Batik</Typography>
-                            <Typography className="mr-24 text-[16px]">Alat-alat sholat</Typography>
+                            <Typography className="text-[16px] px-10">Mukena</Typography>
+                            <Typography className="text-[16px] px-10">Daster</Typography>
+                            <Typography className="text-[16px] px-10">Batik</Typography>
+                            <Typography className="text-[16px] px-10">Alat-alat sholat</Typography>
                         </Grid>
                         <Grid item xs={2} />
                         <Divider className="" />

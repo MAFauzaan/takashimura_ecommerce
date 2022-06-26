@@ -1,7 +1,7 @@
 import React from 'react';
 import {
     Grid, TextField, Typography,
-    AccordionSummary,  AccordionDetails, FormControlLabel, 
+    AccordionSummary, AccordionDetails, FormControlLabel,
     FormGroup, Checkbox, Pagination
 } from '@mui/material';
 import { ExpandMoreOutlined } from '@mui/icons-material'
@@ -10,14 +10,36 @@ import { ItemsList as dataList, IitemList } from '../../../DUMMY/OptionsList';
 import { useItemsList } from '../hooks/useItemsList';
 import ItemsList from '../components/ItemsList';
 import { CustomAccordion } from '../components/CustomAccordion';
+import { capitalizeFirstLetter } from '../../../common/helpers/textHelpers';
+import { useRouter } from 'next/router';
 
-const ProductsPage = () => {
+export async function getServerSideProps(context: any) {
+    const { params, query } = context;
+    const { type } = params;
+    const response = await fetch(`http://localhost:5000/get-product-by-type/${capitalizeFirstLetter(type)}?page=${query.page}`, {
+        method: 'GET',
+        headers: { "Content-Type": "application/json" },
+    });
+    const result = await response.json();
+
+    return {
+        props: {
+            data: result.data.rows
+        }
+    };
+};
+
+
+const ProductsPage = ({ data }: any) => {
+    const router = useRouter();
+    const { query } = router;
     const { windowWidth } = useDynamicScreen();
     const {
         checkedList, onChangeCheckedList,
         sortFromMostExpensive, sortFromCheapest,
         onChangeSortFromCheapest, onChangeSortFromMostExpensive,
-        onChangePage, page, onChangeSelectedItem
+        onChangePage, page, onChangeSelectedItem,
+        onClickCheckBox, clickedCheckBox
     } = useItemsList();
 
     const listName = dataList.map((item: IitemList) => item.name)
@@ -40,11 +62,11 @@ const ProductsPage = () => {
                                 <FormGroup>
                                     {
                                         listName.map((item: any) => (
-                                            <FormControlLabel 
-                                                key={item} 
-                                                control={<Checkbox />} 
-                                                label={<Typography className='text-[14px]'>{item}</Typography>} 
-                                                sx={{ fontSize: '16px' }} 
+                                            <FormControlLabel
+                                                key={item}
+                                                control={<Checkbox />}
+                                                label={<Typography className='text-[14px]'>{item}</Typography>}
+                                                sx={{ fontSize: '16px' }}
                                             />
                                         ))
                                     }
@@ -66,7 +88,7 @@ const ProductsPage = () => {
                                     placeholder='Dari Harga Termurah'
                                     value={sortFromCheapest}
                                     onChange={onChangeSortFromCheapest}
-                                    inputProps={{style: {fontSize: 14}}}
+                                    inputProps={{ style: { fontSize: 14 } }}
                                     variant='outlined'
                                     className='mb-[16px]'
                                     sx={{
@@ -83,7 +105,7 @@ const ProductsPage = () => {
                                     placeholder='Dari Harga Termahal'
                                     value={sortFromMostExpensive}
                                     onChange={onChangeSortFromMostExpensive}
-                                    inputProps={{style: {fontSize: 14}}}
+                                    inputProps={{ style: { fontSize: 14 } }}
                                     variant='outlined'
                                     className='mb-[16px]'
                                     sx={{
@@ -123,7 +145,17 @@ const ProductsPage = () => {
                                                 <FormGroup>
                                                     {
                                                         listName.map((item: any) => (
-                                                            <FormControlLabel key={item} control={<Checkbox />} label={item} sx={{ fontSize: '16px' }} />
+                                                            <FormControlLabel
+                                                                key={item} 
+                                                                control={
+                                                                    <Checkbox 
+                                                                        checked={clickedCheckBox.type === item ? clickedCheckBox.checked : false}
+                                                                        onClick={() => onClickCheckBox(item)}
+                                                                    />
+                                                                } 
+                                                                label={item} 
+                                                                sx={{ fontSize: '16px' }} 
+                                                            />
                                                         ))
                                                     }
                                                 </FormGroup>
@@ -173,8 +205,16 @@ const ProductsPage = () => {
                                         </CustomAccordion>
                                     </div>
                                 </Grid>
-                                <Grid item xs={9}>
-                                    <ItemsList checked={checkedList} onChangeSelectedItem={onChangeSelectedItem} />
+                                <Grid item xs={9} className='relative h-[calc(100vh_-_300px)]'>
+                                    {
+                                        data && data.length > 0 ?
+                                            <ItemsList data={data} checked={checkedList} onChangeSelectedItem={onChangeSelectedItem} />
+                                            :
+                                            <div className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2'>
+                                                <Typography>Tidak Ada Produk</Typography>
+                                            </div>
+
+                                    }
                                 </Grid>
                             </Grid>
                         </>
@@ -187,7 +227,7 @@ const ProductsPage = () => {
                             </Grid>
                             <Grid container>
                                 <Grid item xs={12}>
-                                    <ItemsList checked={checkedList} onChangeSelectedItem={onChangeSelectedItem} />
+                                    <ItemsList data={data} checked={checkedList} onChangeSelectedItem={onChangeSelectedItem} />
                                 </Grid>
                             </Grid>
                         </div>

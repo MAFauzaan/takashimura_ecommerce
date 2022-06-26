@@ -14,7 +14,7 @@ const PageLayout = ({ children }: ILayout) => {
     const router = useRouter();
     const { route } = router;
     const { windowWidth } = useDynamicScreen();
-    console.log(route)
+
     return (
         <Layout>
             {

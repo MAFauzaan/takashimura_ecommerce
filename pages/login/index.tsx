@@ -2,8 +2,12 @@ import React from 'react';
 import { Button, TextField, Typography } from '@mui/material';
 import { StatusButton } from '../../components/CustomButtons';
 import Link from 'next/link';
+import { useLogin } from './hooks/useLogin';
 
 const LoginPage = () => {
+
+    const { email, password, onChangeEmail, onChangePassword, onClickLogin } = useLogin();
+
     return (
         <div className='flex place-items-center justify-center h-[calc(100vh-64px)]'>
             <div>
@@ -14,9 +18,12 @@ const LoginPage = () => {
                 <div>
                     <Typography className='text-[14px] text-[#001219]'>Email</Typography>
                     <TextField
+                        autoComplete='off'
                         fullWidth
                         variant='outlined'
                         className='mt-5 mb-[24px]'
+                        value={email}
+                        onChange={onChangeEmail}
                         sx={{
                             "& label.Mui-focused": {
                                 display: "none"
@@ -28,9 +35,12 @@ const LoginPage = () => {
                     />
                     <Typography className='text-[14px] text-[#001219]'>Password</Typography>
                     <TextField
+                        autoComplete='off'
                         fullWidth
                         variant='outlined'
                         className='mt-5 mb-[16px]'
+                        value={password}
+                        onChange={onChangePassword}
                         sx={{
                             "& label.Mui-focused": {
                                 display: "none"
@@ -44,6 +54,7 @@ const LoginPage = () => {
                         <Typography className='text-[14px] text-[#001219] hover:cursor-pointer hover:text-[#BD0029]'>Lupa Password ?</Typography>
                     </Link>
                     <StatusButton
+                        onClick={onClickLogin}
                         fullWidth
                         sx={{ textTransform: 'none' }}
                         style={{ background: '#BD0029', width: '100%', marginTop: '16px' }}

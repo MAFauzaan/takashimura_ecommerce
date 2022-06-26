@@ -57,13 +57,12 @@ export const cartSlice = createSlice({
         },
         onAddItem: (state: any, action: any) => {
             state.cartItems.push(action.payload)
-        }
+        },
     }
 })
 
 export const { onOpenDrawer, onCloseDrawer, onAddItem } = cartSlice.actions;
 
 export const checkOpenDrawer = ((state: AppState) => state.cart.isOpened);
-export const checkCartItems = ((state: AppState) => state.cart.cartItems);
 
 export default cartSlice.reducer

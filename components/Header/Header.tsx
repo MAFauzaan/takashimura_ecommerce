@@ -6,20 +6,21 @@ import { SearchOutlined, MenuOutlined, CloseOutlined } from '@ant-design/icons'
 import { AccountCircleOutlined, ShoppingBagOutlined } from '@mui/icons-material';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
-import { onOpenDrawer as openCart, onCloseDrawer as closeCart, checkCartItems } from '../../store/reducers/cartSlice';
+import { onOpenDrawer as openCart, onCloseDrawer as closeCart } from '../../store/reducers/cartSlice';
+import { checkCartItems } from '../../store/reducers/userSlice';
 import Link from 'next/link';
 import CustomDrawer from './CustomDrawer';
 import { useHeader } from './useHeader';
 import { useAppSelector } from '../../store/hooks';
 import style from './_Header.module.scss'
-import { checkIsLoggedIn } from '../../store/reducers/userSlice';
+import { checkIsAuthenticated } from '../../store/reducers/userSlice';
 
 export const Header = () => {
     const dispatch = useDispatch();
     const router = useRouter();
     const { replace } = router;
     const { openDrawer, onOpenDrawer, onCloseDrawer } = useHeader();
-    const isLoggedIn = useAppSelector(checkIsLoggedIn);
+    const isAuthenticated = useAppSelector(checkIsAuthenticated);
     const cartItemsAmount = useAppSelector(checkCartItems);
 
     const { windowWidth } = useDynamicScreen();
@@ -44,28 +45,26 @@ export const Header = () => {
                     windowWidth > 600 ?
                         <>
                             <Grid item sm={4} className="flex place-items-center justify-center h-[64px] gap-10">
-                                {
-                                    isLoggedIn &&
-                                    <>
-                                        <Link href="/" passHref>
-                                            <Typography className="text-[16px] cursor-pointer">Jelajahi</Typography>
-                                        </Link>
-                                        <Link href="/products" passHref>
-                                            <Typography className="text-[16px] cursor-pointer">Produk</Typography>
-                                        </Link>
-                                    </>
-                                }
+                                <Link href="/" passHref>
+                                    <Typography className="text-[16px] cursor-pointer">Jelajahi</Typography>
+                                </Link>
+                                <Link href="/products" passHref>
+                                    <Typography className="text-[16px] cursor-pointer">Produk</Typography>
+                                </Link>
                             </Grid>
                             <Grid item sm={4} className="text-center flex place-items-center place-content-center h-[64px]">
                                 <div className={`${style.logoTop} absolute top-[25px] hover: cursor-pointer`} onClick={() => replace('/')} />
                             </Grid>
                             <Grid item sm={4} className="text-center flex justify-center items-center gap-5 h-[64px]">
-                                <div className="flex place-items-center">
-                                    <Typography className="text-[16px] mr-2 hover:cursor-pointer" onClick={onOpenCart}>Keranjang</Typography>
-                                    <TotalItemCart />
-                                </div>
                                 {
-                                    isLoggedIn ?
+                                    isAuthenticated &&
+                                    <div className="flex place-items-center">
+                                        <Typography className="text-[16px] mr-2 hover:cursor-pointer" onClick={onOpenCart}>Keranjang</Typography>
+                                        <TotalItemCart />
+                                    </div>
+                                }
+                                {
+                                    isAuthenticated ?
                                         <Link href="/account" passHref>
                                             <AccountCircleOutlined className='!text-[25px] cursor-pointer' />
                                         </Link>

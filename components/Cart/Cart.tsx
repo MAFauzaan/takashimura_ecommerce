@@ -6,8 +6,9 @@ import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import { useDynamicScreen } from '../../common/hooks/useDynamicScreen';
 import { useAppSelector } from '../../store/hooks';
-import { checkOpenDrawer, checkCartItems, onCloseDrawer } from '../../store/reducers/cartSlice';
-import { CartList, ICartList } from '../../DUMMY/CartList';
+import { checkOpenDrawer, onCloseDrawer } from '../../store/reducers/cartSlice';
+import { checkCartItems, onDeleteItem as deleteItemFromCart } from '../../store/reducers/userSlice';
+
 import ItemMiniDescription from '../ItemMiniDescription/ItemMiniDescription';
 
 const Cart = () => {
@@ -20,6 +21,10 @@ const Cart = () => {
     const onClickCheckout = () => {
         dispatch(onCloseDrawer());
         replace('/checkout/information');
+    }
+
+    const onDeleteItem = (id: any) => {
+        dispatch(deleteItemFromCart(id))
     }
 
     useEffect(() => {
@@ -49,18 +54,18 @@ const Cart = () => {
                     </div>
                 </div>
                 <Divider className='mt-0' />
-                <div className='w-full h-[500px] overflow-scroll'>
+                <div className={`${cartItems.length > 3 ? 'overflow-y-scroll' : ''}w-full h-[500px] relative`}>
                     {
-                        cartItems.length > 0 &&
+                        cartItems.length > 0 ?
                         <>
                             {
-                                cartItems.map((cartItem: ICartList) => (
+                                cartItems.map((cartItem: any) => (
                                     <React.Fragment key={cartItem.id}>
                                         {
                                             windowWidth > 769 ?
                                                 <Grid container className='px-[16px] mb-[32px]'>
                                                     <Grid item xs={6} className='flex'>
-                                                        <ItemMiniDescription itemName={cartItem.name} itemPrice={cartItem.price} />
+                                                        <ItemMiniDescription item={cartItem} />
                                                     </Grid>
                                                     <Grid item xs={3} className='flex place-items-center'>
                                                         <Grid container className='w-full h-[40px] text-center border-2 rounded-md'>
@@ -68,7 +73,7 @@ const Cart = () => {
                                                                 <MinusOutlined />
                                                             </Grid>
                                                             <Grid item xs={4} className='flex place-items-center justify-center'>
-                                                                <Typography>{cartItem.amount}</Typography>
+                                                                <Typography>{cartItem.detail.amount}</Typography>
                                                             </Grid>
                                                             <Grid item xs={3} className='flex place-items-center justify-center'>
                                                                 <PlusOutlined />
@@ -76,14 +81,14 @@ const Cart = () => {
                                                         </Grid>
                                                     </Grid>
                                                     <Grid item xs={3} className='text-right'>
-                                                        <Typography className='text-[16px] font-semibold block mb-[16px]'>{`Rp${cartItem.price * cartItem.amount}`}</Typography>
-                                                        <Typography className='text-[14px] block'>Hapus</Typography>
+                                                        <Typography className='text-[16px] font-semibold block mb-[16px]'>{`Rp${cartItem.detail.subtotal}`}</Typography>
+                                                        <Typography className='text-[14px] block cursor-pointer' onClick={() => onDeleteItem(cartItem.productid)}>Hapus</Typography>
                                                     </Grid>
                                                 </Grid>
                                                 :
                                                 <Grid container className='px-[16px] mb-[32px]'>
                                                     <Grid item xs={12} className='flex mb-12'>
-                                                        <ItemMiniDescription itemName={cartItem.name} itemPrice={cartItem.price} />
+                                                        <ItemMiniDescription item={cartItem} />
                                                     </Grid>
                                                     <Grid item xs={6} className='flex place-items-center justify-end'>
                                                         <Grid container className='w-[120px] h-[40px] text-center border-2 rounded-md'>
@@ -100,7 +105,7 @@ const Cart = () => {
                                                     </Grid>
                                                     <Grid item xs={6} className='text-right'>
                                                         <Typography className='text-[16px] font-semibold block mb-[8px]'>{`Rp${cartItem.price * cartItem.amount}`}</Typography>
-                                                        <Typography className='text-[14px] block'>Hapus</Typography>
+                                                        <Typography className='text-[14px] block cursor-pointer' onClick={() => onDeleteItem(cartItem.productid)}>Hapus</Typography>
                                                     </Grid>
                                                 </Grid>
                                         }
@@ -142,6 +147,10 @@ const Cart = () => {
                                 </div>
                             </div>
                         </>
+                        :
+                        <Typography className='text-[#4F555B] text-[20px] absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 !w-full text-center px-8'>
+                            Belum ada barang di keranjang, silakan masukkan barang ke keranjang.
+                        </Typography>
                     }
                 </div>
             </div>

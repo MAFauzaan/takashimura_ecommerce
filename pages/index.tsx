@@ -24,21 +24,20 @@ interface ISelectedOption {
   description: any
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const response = await fetch('http://localhost:5000/get-products', {
     method: 'GET',
     headers: { "Content-Type": "application/json" },
   });
   const result = await response.json();
-
   return {
     props: {
-      data: result.data
+      data: result.data,
     }
   };
 };
 
-const Home: NextPage = ({data}: any) => {
+const Home: NextPage = ({ data, user }: any) => {
   const { windowWidth } = useDynamicScreen();
   const { replace, push } = useRouter();
   const slicedProducts = data.slice(0, 8);
@@ -89,7 +88,7 @@ const Home: NextPage = ({data}: any) => {
             {
               ItemsList.map((item: IitemList, index: any) => (
                 <Grid item xs={6} key={item.id} onMouseEnter={() => onChangeSelected(item.name, item.description)}>
-                  <div className='w-[260px] mr-[10px] mb-5 p-4 hover:bg-[#F8F9FA] cursor-pointer' onClick={() => replace(`/products/${item.name.toLowerCase()}`)} >
+                  <div className='w-[260px] mr-[10px] mb-5 p-4 hover:bg-[#F8F9FA] cursor-pointer' onClick={() => push(`/products/${item.name.toLowerCase()}?page=1`)} >
                     <Typography className='text-[24px] block'>{item.name}</Typography>
                     <Typography className='text-[16px]'>{item.description}</Typography>
                   </div>
@@ -179,8 +178,11 @@ const Home: NextPage = ({data}: any) => {
           <Typography className='text-[20px] text-white font-bold underline hover:cursor-pointer'>PELAJARI LEBIH LANJUT</Typography>
         </div>
       </div>
-      <section id="options" className={onSectionOptionsClasses()}>
-        <Grid container className={windowWidth <= 769 ? '!block' : 'flex'}>
+      <section id="options">
+        <div className='absolute'>
+          <Image src="/Ta.png" width={354} height={236} alt="logo" className='absolute' />
+        </div>
+        <Grid container className={`${windowWidth <= 769 ? '!block' : 'flex'} ${onSectionOptionsClasses()} relative`}>
           {
             windowWidth >= 1100 ?
               <>
@@ -235,7 +237,7 @@ const Home: NextPage = ({data}: any) => {
               slicedProducts.map((item: any) => {
                 return (
                   <SwiperSlide key={item.id} className='flex place-content-center place-items-center'>
-                    <ItemCard item={item} onChangeSelectedItem={onChangeSelectedItem}/>
+                    <ItemCard item={item} onChangeSelectedItem={onChangeSelectedItem} />
                   </SwiperSlide>
                 )
               })

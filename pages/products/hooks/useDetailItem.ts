@@ -1,30 +1,61 @@
 import React, { useState, useEffect} from 'react';
-import { checkSelectedItem } from '../../../store/reducers/userSlice';
-import { useAppSelector } from '../../../store/hooks';
+import { useAppDispatch } from '../../../store/hooks';
+import { onAddItem } from '../../../store/reducers/userSlice';
 
-export const useDetailItem = () => {
-    const [selectedSize, setSelectedSize] = useState<any>('XL');
+export const useDetailItem = (data: any) => {
+    const dispatch = useAppDispatch();
+    const [selectedSize, setSelectedSize] = useState<any>('XXL');
     const [amount, setAmount] = useState<any>(0);
-    const [selectedItem, setSelectedItem] = useState<any>(useAppSelector(checkSelectedItem))
+    const [price, setPrice] = useState(0)
+
+    const foundSizeVariant = data.sizevariants?.find((v: any) => v.size === selectedSize)
+    const stock = data.sizevariants?.length > 0 ? Number(foundSizeVariant.stock): Number(data.variant.stock)
 
     const  onChangeSelectedSize = (value: any) => {
         setSelectedSize(value)
+        setAmount(0)
+        setPrice(Number(foundSizeVariant.price))
     }
 
     const onChangeSetAmount = (type: any) => {
-        console.log(type)                                                                                                                                                                               
         if (type === 'addition') {
-            setAmount(amount + 1)
+            if (amount === stock) setAmount(amount);
+            else setAmount(amount + 1)
         } else if (amount !== 0) {
             setAmount(amount - 1)
         }
     }
 
+    const onClickAddToCart = () => {
+        const constructData = {
+            productid: data.productid,
+            name: data.productname,
+            photos: data.photos,
+            detail: {
+                subtotal: amount * price,
+                amount,
+                pricePerItem: price,
+                size: selectedSize,
+                sku: foundSizeVariant.sku
+            }
+        }
+        console.log(constructData)
+        dispatch(onAddItem(constructData))
+    }
+
+    useEffect(() => {
+        if (data) {
+            setPrice(Number(foundSizeVariant.price))
+        }
+    }, [data, foundSizeVariant.price]);
+    
     return {
         selectedSize,
         amount,
         onChangeSetAmount,
         onChangeSelectedSize,
-        selectedItem
+        stock,
+        price,
+        onClickAddToCart
     }
 } 

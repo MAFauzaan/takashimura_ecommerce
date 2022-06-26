@@ -1,19 +1,23 @@
 import React from 'react';
 import { Typography } from '@mui/material';
+import Image from 'next/image';
 
 interface IItemMiniDescription {
-    itemName: string,
-    itemPrice: number
+    item: any
 }
 
-const ItemMiniDescription = ({ itemName, itemPrice}: IItemMiniDescription) => (
-    <div className='flex'>
-        <div className='w-[64px] h-[64px]  bg-red-700 inline-block' />
-        <div className='w-[184px] ml-[16px]'>
-            <Typography className='text-[14px] inline-block w-full'>{itemName}</Typography>
-            <Typography className='text-[14px] inline-block font-medium w-full'>{`Rp${itemPrice}`}</Typography>
+const ItemMiniDescription = ({ item}: IItemMiniDescription) => {
+    console.log(item)
+    return (
+        <div className='flex'>
+            <Image src={item?.photos[0].thumbUrl} height={64} width={64} alt={item.name} />
+            <div className='w-[184px] ml-[16px]'>
+                <Typography className='text-[14px] inline-block w-full'>{item.name}</Typography>
+                <Typography className='text-[14px] inline-block w-full'>{item.detail.size}</Typography>
+                <Typography className='text-[14px] inline-block font-medium w-full'>{`Rp${item.detail.pricePerItem}`}</Typography>
+            </div>
         </div>
-    </div>
-)
-
+    )
+    
+}
 export default ItemMiniDescription;

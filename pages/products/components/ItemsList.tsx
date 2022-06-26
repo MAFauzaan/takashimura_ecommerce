@@ -7,23 +7,21 @@ import { useDynamicScreen } from '../../../common/hooks/useDynamicScreen';
 
 import { ItemsList as list, IItems } from '../../../DUMMY/OptionsList';
 
-const { Text } = Typography;
-
 interface IitemList {
     checked: any,
-    onChangeSelectedItem: any
+    onChangeSelectedItem: any,
+    data: any
 }
 
-const ItemsList = ({ checked, onChangeSelectedItem }: IitemList) => {
+const ItemsList = ({ checked, onChangeSelectedItem, data }: IitemList) => {
     const router = useRouter();
     const { asPath } = router;
     const { windowWidth } = useDynamicScreen();
-    const foundList = list.find((v: any) => v.name === checked);
-
+    console.log(data)
     return (
         <Row gutter={[16, 16]}>
             {
-                foundList?.items?.map((item: IItems) => {
+                data?.map((item: IItems) => {
                     return (
                         <Link key={item.id} href={`${asPath}/${item.id}`} passHref={true}>
                             <Col span={windowWidth >= 1280 ? 6 : 8}>

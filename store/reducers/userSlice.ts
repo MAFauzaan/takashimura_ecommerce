@@ -2,15 +2,9 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppState } from '../store';
 
 export interface IUserSlice {
-    userData: {
-        name: string,
-        email: string,
-        alamat: string,
-        negara: string,
-        kodePos: number,
-        nomorTelepon: string
-    },
-    isLoggedIn: true,
+    userData: any,
+    cartItems: any
+    authenticated: boolean,
     userSelectedItem: any,
 }
 
@@ -18,12 +12,13 @@ const initialState: IUserSlice = {
     userData: {
         name: 'Muhammad Adityo Fauzaan',
         email: 'afauzaan34@gmail.com',
-        alamat: 'Jl. Raya Hankam, Pondok Gede',
-        negara: 'Indonesia',
+        address: 'Jl. Raya Hankam, Pondok Gede',
+        country: 'Indonesia',
         kodePos: 17415,
-        nomorTelepon: '081319125026'
+        telephoneNumber: '081319125026'
     },
-    isLoggedIn: true,
+    cartItems: [],
+    authenticated: false,
     userSelectedItem: {}
 }
 
@@ -33,14 +28,38 @@ export const userSlice = createSlice({
     reducers: {
         setUserSelectedItem: (state: any, action: any) => {
             state.userSelectedItem = action.payload
+        },
+        onAddItem: (state: any, action: any) => {
+            state.cartItems.push(action.payload)
+        },
+        onDeleteItem: (state: any, action: any) => {
+            const foundItem = state.cartItems.filter((v: any) => v.productid !== action.payload);
+            state.cartItems = foundItem
+        },
+        onChangeUserData: (state: any, action: any) => {
+            state.userData = action.payload
+        },
+        onLogout: (state: any) => {
+            state.isLoggedIn = false
+        },
+        onChangeAuth: (state: any, action: any) =>{
+            console.log(action.payload)
+            const isAuthenticated = action.payload ? true : false
+            state.authenticated = isAuthenticated;
         }
-    }
+    },
+
 })
 
-export const { setUserSelectedItem } = userSlice.actions;
+export const { 
+    setUserSelectedItem, onAddItem, onDeleteItem, 
+    onLogout, onChangeAuth, onChangeUserData
+} = userSlice.actions;
 
 export const checkUserData = ((state: AppState) => state.user.userData);
-export const checkIsLoggedIn = ((state: AppState) => state.user.isLoggedIn)
+export const checkIsAuthenticated = ((state: AppState) => state.user.authenticated)
 export const checkSelectedItem = ((state: AppState) => state.user.userSelectedItem);
+export const checkCartItems = ((state: AppState) => state.user.cartItems);
+
 
 export default userSlice.reducer

@@ -89,3 +89,10 @@ body {
 .MuiButtonBase-root {
   font-size: 14px;
 }
+
+.alert {
+  position: absolute !important;
+  top: 10%;
+  left: 50%; 
+  transform: translate(-50%, -50%);
+}

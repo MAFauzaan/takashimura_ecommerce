@@ -2,10 +2,14 @@ import React from 'react';
 import { Button, TextField, Typography } from '@mui/material';
 import { StatusButton } from '../../components/CustomButtons';
 import Link from 'next/link';
+import { useSignUp } from './hooks/useSignup';
+import { Alert } from 'antd';
 
 const LoginPage = () => {
+    const { email, password, fullName, onChangeEmail, onChangeFullName, onChangePassword, onClickRegister, message } = useSignUp()
+
     return (
-        <div className='flex place-items-center justify-center h-[calc(100vh-64px)]'>
+        <div className='flex place-items-center justify-center h-[calc(100vh-64px)] relative'>
             <div>
                 <div className='mb-[40px]'>
                     <Typography className='text-[28px] text-[#001219] font-semibold mb-[8px]'>Daftar</Typography>
@@ -14,9 +18,12 @@ const LoginPage = () => {
                 <div>
                     <Typography className='text-[14px] text-[#001219]'>Nama Lengkap</Typography>
                     <TextField
+                        autoComplete='off'
                         fullWidth
                         variant='outlined'
                         className='mt-5 mb-[24px]'
+                        value={fullName}
+                        onChange={onChangeFullName}
                         sx={{
                             "& label.Mui-focused": {
                                 display: "none"
@@ -28,9 +35,12 @@ const LoginPage = () => {
                     />
                     <Typography className='text-[14px] text-[#001219]'>Email</Typography>
                     <TextField
+                        autoComplete='off'
                         fullWidth
                         variant='outlined'
                         className='mt-5 mb-[24px]'
+                        value={email}
+                        onChange={onChangeEmail}
                         sx={{
                             "& label.Mui-focused": {
                                 display: "none"
@@ -42,9 +52,12 @@ const LoginPage = () => {
                     />
                     <Typography className='text-[14px] text-[#001219]'>Password</Typography>
                     <TextField
+                        autoComplete='off'
                         fullWidth
                         variant='outlined'
                         className='mt-5 mb-[16px]'
+                        value={password}
+                        onChange={onChangePassword}
                         sx={{
                             "& label.Mui-focused": {
                                 display: "none"
@@ -58,6 +71,7 @@ const LoginPage = () => {
                         fullWidth
                         sx={{ textTransform: 'none' }}
                         style={{ background: '#BD0029', width: '100%', marginTop: '16px' }}
+                        onClick={onClickRegister}
                     >
                         Daftar
                     </StatusButton>
@@ -71,6 +85,15 @@ const LoginPage = () => {
                     </Typography>
                 </div>
             </div>
+            {
+                message &&
+                <Alert
+                    message={message}
+                    type="success"
+                    showIcon
+                    className='alert'
+                />
+            }
         </div>
     )
 }
