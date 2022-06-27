@@ -1,12 +1,9 @@
 import React from "react";
 import { ArrowLeftOutlined } from "@ant-design/icons";
-import { Row, Col, Steps } from "antd";
-import { Grid, Typography, Stepper  } from "@mui/material";
+import { Grid, Typography, Stepper, Step, StepLabel  } from "@mui/material";
 import { useRouter } from "next/router";
 import { useDynamicScreen } from "../../common/hooks/useDynamicScreen";
 import style from '../Header/_Header.module.scss'
-
-const { Step } = Steps; 
 
 const CheckoutHeader = ({ step }: any) => {
     const { replace } = useRouter();
@@ -15,6 +12,8 @@ const CheckoutHeader = ({ step }: any) => {
     const onBack = () => {
         replace('/')
     } 
+
+    const stepLabel = ["Informasi", "Pengiriman", "Pembayaran"];
 
     return (
         <div className={`${windowWidth < 800 ? 'mb-[32px]' : ''}`}>
@@ -26,12 +25,16 @@ const CheckoutHeader = ({ step }: any) => {
                         <Typography className="ml-[10px] text-[14px]">Kembali ke keranjang</Typography>
                     </div>
                 </Grid>
-                <Grid item xs={windowWidth <= 800 ? 12 : 4}>
-                    <Steps current={step} size="small" className="w-[550px]">
-                        <Step title="Informasi" />
-                        <Step title="Pengiriman" />
-                        <Step title="Pembayaran" />
-                    </Steps>
+                <Grid item xs={windowWidth <= 800 ? 12 : 8}>
+                    <Stepper activeStep={step}>
+                       {
+                           stepLabel.map((step: string) => (
+                               <Step key={step}>
+                                   <StepLabel className="text-[16px]">{step}</StepLabel>
+                               </Step>
+                           ))
+                       }
+                    </Stepper>
                 </Grid>
             </Grid>
         </div>

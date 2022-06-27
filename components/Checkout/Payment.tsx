@@ -64,7 +64,7 @@ const Payment = ({shipmentMethod}: any) => {
                 </Grid>
             </div>
             <div className='text-[16px] font-semibold mt-[50px]'>
-                <Typography>Pembayaran</Typography>
+                <Typography className='text-[16px]'>Pembayaran</Typography>
             </div>
             <div className='mt-[16px] p-[16px] border-2'>
                 {/* SHOULD BE DYNAMIC */}

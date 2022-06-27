@@ -13,18 +13,19 @@ body {
   color: #4F555B;
 }
 
-.swiper-pagination-bullet {
-  background-color: #575656 !important;
-  border-radius: 0 !important;
-  width: 4.8rem !important;
-  height: 0.4rem !important;
+.MuiStepLabel-labelContainer span {
+  font-size: 16px;
 }
 
-.swiper-pagination-bullet-active {
-  background-color: #BD0029 !important;
-  border-radius: 0 !important;
-  width: 4.8rem !important;
-  height: 0.4rem !important;
+.MuiStepLabel-iconContainer {
+  .MuiSvgIcon-root {
+    width: 24px;
+    height: 24px;
+
+    .MuiStepIcon-text {
+      font-size: 16px;
+    }
+  }
 }
 
 .ant-drawer-header {
