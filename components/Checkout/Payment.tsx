@@ -3,11 +3,17 @@ import { Divider } from 'antd';
 import { Grid, Typography } from '@mui/material';
 import { useRouter } from 'next/router';
 import { PrimaryRightButton } from '../Buttons/CheckoutButtons';
+import { useAppSelector } from '../../store/hooks';
+import { checkUserData } from '../../store/reducers/userSlice';
 
-const Payment = () => {
+type props = {
+    shipmentMethod: any
+}
 
+const Payment = ({shipmentMethod}: any) => {
+    const userData = useAppSelector(checkUserData)
     const { push, back } = useRouter();
-
+    console.log(shipmentMethod)
     const onNextPage = () => {
         push('/checkout/payment')
     };
@@ -26,7 +32,7 @@ const Payment = () => {
                         <Typography className='text-[16px] text-[#4F555B]'>Alamat</Typography>
                     </Grid>
                     <Grid item xs={7}>
-                        <Typography className='text-[16px] '>Jalan Menuju hatinya yang jauh di sana, nggak kegapai-gapai pula.</Typography>
+                        <Typography className='text-[16px] '>{''}</Typography>
                     </Grid>
                     <Grid item xs={2} className='text-right'>
                         <Typography className='text-[16px] text-[#0E8244]'>Ubah</Typography>
@@ -38,7 +44,7 @@ const Payment = () => {
                         <Typography className='text-[16px] text-[#4F555B]'>Nomor Telepon</Typography>
                     </Grid>
                     <Grid item xs={7}>
-                        <Typography className='text-[16px] '>085894984840</Typography>
+                        <Typography className='text-[16px] '>{''}</Typography>
                     </Grid>
                     <Grid item xs={2} className='text-right'>
                         <Typography className='text-[16px] text-[#0E8244]'>Ubah</Typography>
@@ -65,7 +71,7 @@ const Payment = () => {
 
             </div>
             <div className='flex place-items-center absolute bottom-4 gap-8'>
-                <PrimaryRightButton className='bg-[#BD0029] hover:bg-[#cb002c]' onClick={onNextPage}>Lanjutkan ke Pengiriman</PrimaryRightButton>
+                <PrimaryRightButton className='bg-[#BD0029] hover:bg-[#cb002c]' onClick={onNextPage}>Selesaikan Pembayaran</PrimaryRightButton>
                 <Typography className='text-[16px] font-semibold hover:cursor-pointer' onClick={onBack}>Sebelumnya</Typography>
             </div>
         </div>

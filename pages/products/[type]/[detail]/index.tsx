@@ -22,11 +22,10 @@ export async function getServerSideProps(context: any) {
 
     return {
         props: {
-            data: result.data.rows
+            data: result.data
         }
     };
 };
-
 
 const DetailPage = ({ data }: any) => {
     const router = useRouter();

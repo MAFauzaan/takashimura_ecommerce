@@ -27,7 +27,7 @@ export const Header = () => {
 
     const TotalItemCart = () => (
         <div className='w-6 h-6 flex place-items-center justify-center bg-[#BD0029] text-white rounded-full'>
-            <p className='text-[16px]'>{cartItemsAmount.length}</p>
+            <p className='text-[16px]'>{cartItemsAmount.length || 0}</p>
         </div>
     )
 

@@ -104,7 +104,7 @@ const StatusModal = ({ isOpen, onClose, selectedStatusButton }: modal) => {
                                 <div key={order.id} className='px-[16px] py-[24px] border mb-[8px]'>
                                     <Grid container>
                                         <Grid item xs={8}>
-                                            <ItemMiniDescription itemName={order.name} itemPrice={order.price} />
+                                            <ItemMiniDescription item={order} />
                                         </Grid>
                                         <Grid item xs={2}>
                                             <Typography className='text-[12px] text-[#343A40]'>Qty : {order.amount}</Typography>

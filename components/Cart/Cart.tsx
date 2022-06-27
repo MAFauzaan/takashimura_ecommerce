@@ -4,10 +4,11 @@ import { Drawer, Divider } from 'antd';
 import { CloseOutlined, MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
+import { clone } from 'ramda';
 import { useDynamicScreen } from '../../common/hooks/useDynamicScreen';
 import { useAppSelector } from '../../store/hooks';
 import { checkOpenDrawer, onCloseDrawer } from '../../store/reducers/cartSlice';
-import { checkCartItems, onDeleteItem as deleteItemFromCart } from '../../store/reducers/userSlice';
+import { checkCartItems, onDeleteItem as deleteItemFromCart, onChangeCartItemAmount } from '../../store/reducers/userSlice';
 
 import ItemMiniDescription from '../ItemMiniDescription/ItemMiniDescription';
 
@@ -18,9 +19,36 @@ const Cart = () => {
     const cartItems = useAppSelector(checkCartItems);
     const isCartOpened: boolean = useAppSelector(checkOpenDrawer);
 
+    const subtotal = () => {
+        const mappedCartItems = cartItems.map((v: any) => v.detail);
+        const sub = mappedCartItems.reduce((a: any, b: any) => a + b.subtotal, 0);
+
+        return sub || '';
+    }
+
     const onClickCheckout = () => {
         dispatch(onCloseDrawer());
         replace('/checkout/information');
+    }
+
+    const onAddAmount = (id: any) => {
+        const clonedCartItems = clone(cartItems)
+        const findCartItemIndex = clonedCartItems.findIndex((v: any) => v.productid === id)
+        if(Number(clonedCartItems[findCartItemIndex].stock) > clonedCartItems[findCartItemIndex].detail.amount) {
+            clonedCartItems[findCartItemIndex].detail.amount++
+            clonedCartItems[findCartItemIndex].detail.subtotal = clonedCartItems[findCartItemIndex].detail.amount * clonedCartItems[findCartItemIndex].detail.pricePerItem
+        }
+        dispatch(onChangeCartItemAmount(clonedCartItems))
+    }
+
+    const onLessenAmount = (id: any) => {
+        const clonedCartItems = clone(cartItems)
+        const findCartItemIndex = clonedCartItems.findIndex((v: any) => v.productid === id)
+        if (clonedCartItems[findCartItemIndex].detail.amount > 1) {
+            clonedCartItems[findCartItemIndex].detail.amount--
+            clonedCartItems[findCartItemIndex].detail.subtotal = clonedCartItems[findCartItemIndex].detail.amount * clonedCartItems[findCartItemIndex].detail.pricePerItem
+        }
+        dispatch(onChangeCartItemAmount(clonedCartItems))
     }
 
     const onDeleteItem = (id: any) => {
@@ -69,19 +97,19 @@ const Cart = () => {
                                                     </Grid>
                                                     <Grid item xs={3} className='flex place-items-center'>
                                                         <Grid container className='w-full h-[40px] text-center border-2 rounded-md'>
-                                                            <Grid item xs={4} className='flex place-items-center justify-center'>
+                                                            <Grid item xs={4} className='flex place-items-center justify-center' onClick={() => onLessenAmount(cartItem.productid)}>
                                                                 <MinusOutlined />
                                                             </Grid>
                                                             <Grid item xs={4} className='flex place-items-center justify-center'>
                                                                 <Typography>{cartItem.detail.amount}</Typography>
                                                             </Grid>
-                                                            <Grid item xs={3} className='flex place-items-center justify-center'>
+                                                            <Grid item xs={3} className='flex place-items-center justify-center' onClick={() => onAddAmount(cartItem.productid)}>
                                                                 <PlusOutlined />
                                                             </Grid>
                                                         </Grid>
                                                     </Grid>
                                                     <Grid item xs={3} className='text-right'>
-                                                        <Typography className='text-[16px] font-semibold block mb-[16px]'>{`Rp${cartItem.detail.subtotal}`}</Typography>
+                                                        <Typography className='text-[16px] font-semibold block mb-[16px]'>{`Rp${cartItem.detail.amount * cartItem.detail.pricePerItem}`}</Typography>
                                                         <Typography className='text-[14px] block cursor-pointer' onClick={() => onDeleteItem(cartItem.productid)}>Hapus</Typography>
                                                     </Grid>
                                                 </Grid>
@@ -119,7 +147,7 @@ const Cart = () => {
                                         <Typography className='text-[14px] block'>Subtotal</Typography>
                                     </Grid>
                                     <Grid item xs={6}>
-                                        <Typography className='text-[14px] block text-right'>Rp 140.000</Typography>
+                                        <Typography className='text-[14px] block text-right'>Rp {subtotal()}</Typography>
                                     </Grid>
                                 </Grid>
                                 <Grid container>
@@ -136,7 +164,7 @@ const Cart = () => {
                                         <Typography className='text-[14px] block'>Total Biaya</Typography>
                                     </Grid>
                                     <Grid item xs={6}>
-                                        <Typography className='text-[14px] block text-right'>Rp 140.000</Typography>
+                                        <Typography className='text-[14px] block text-right'>Rp {subtotal()}</Typography>
                                     </Grid>
                                 </Grid>
                                 <div

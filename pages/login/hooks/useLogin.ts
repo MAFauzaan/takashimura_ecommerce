@@ -24,6 +24,7 @@ export const useLogin = () => {
         const loginCredentials = await fetchLogin({email, password});
         if (loginCredentials.token) {
             const userData = await getUserData(loginCredentials.token);
+            console.log(userData)
             dispatch(onChangeAuth(loginCredentials.token));
             dispatch(onChangeUserData(userData))
         }

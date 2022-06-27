@@ -5,6 +5,8 @@ import { useDynamicScreen } from '../../../common/hooks/useDynamicScreen';
 import { tableColumns as column, phoneTableColumn } from './TableColumn';
 import StatusModal from './Modals/StatusModal';
 import ReviewModal from './Modals/ReviewModal';
+import { useAppSelector } from '../../../store/hooks';
+import { checkUserData } from '../../../store/reducers/userSlice';
 
 type History = {
     onChangeSelectedStatusButton: any,
@@ -20,16 +22,17 @@ const HistoryTable = (
         onCloseModal, setSelectedStatusButton, onChangeTextfield
     }: History
 ) => {
+    const orderHistory = useAppSelector(checkUserData).orderhistory;
     const { windowWidth } = useDynamicScreen();
     const tableColumns = useMemo(() => column(onChangeSelectedStatusButton), [onChangeSelectedStatusButton]);
     const phoneColumns = useMemo(() => phoneTableColumn(onChangeSelectedStatusButton), [onChangeSelectedStatusButton])
-
+    console.log(orderHistory)
     return (
         <div className={`${windowWidth >= 1100 ? 'p-[32px]' : windowWidth > 600 && windowWidth < 1000 ? 'p-[24px]' : 'p-[16px]'} bg-white`}>
             {
                 windowWidth > 600 ?
                     <Table
-                        dataSource={orders}
+                        dataSource={orderHistory ? orderHistory : []}
                         columns={[
                             tableColumns.item,
                             tableColumns.amount,
@@ -41,7 +44,7 @@ const HistoryTable = (
                     />
                     :
                     <Table
-                        dataSource={orders}
+                        dataSource={orderHistory ? orderHistory : []}
                         columns={[phoneColumns.orderedItem]}
                         pagination={{ pageSize: 3 }}
                         className='mt-[16px]'
@@ -49,17 +52,17 @@ const HistoryTable = (
             }
             {
                 selectedStatusButton.status === 'shipment' ?
-                    <StatusModal 
-                        isOpen={isModalOpened} 
-                        onClose={onCloseModal} 
-                        selectedStatusButton={selectedStatusButton} 
+                    <StatusModal
+                        isOpen={isModalOpened}
+                        onClose={onCloseModal}
+                        selectedStatusButton={selectedStatusButton}
                         setSelectedStatusButton={setSelectedStatusButton}
                     />
                     :
-                    <ReviewModal 
-                        isOpen={isModalOpened} 
-                        onClose={onCloseModal} 
-                        selectedStatusButton={selectedStatusButton} 
+                    <ReviewModal
+                        isOpen={isModalOpened}
+                        onClose={onCloseModal}
+                        selectedStatusButton={selectedStatusButton}
                         setSelectedStatusButton={setSelectedStatusButton}
                         onChangeTextfield={onChangeTextfield}
                     />

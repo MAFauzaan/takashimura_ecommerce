@@ -1,12 +1,16 @@
 import React, { useState, useEffect} from 'react';
-import { useAppDispatch } from '../../../store/hooks';
-import { onAddItem } from '../../../store/reducers/userSlice';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { checkUserData, onAddItem } from '../../../store/reducers/userSlice';
+import { AddItemToCart } from '../services/item.service';
 
 export const useDetailItem = (data: any) => {
+    let  token: any;
     const dispatch = useAppDispatch();
+    const customer = useAppSelector(checkUserData)
     const [selectedSize, setSelectedSize] = useState<any>('XXL');
     const [amount, setAmount] = useState<any>(0);
     const [price, setPrice] = useState(0)
+    const [usedData, setUsedData] = useState({})
 
     const foundSizeVariant = data.sizevariants?.find((v: any) => v.size === selectedSize)
     const stock = data.sizevariants?.length > 0 ? Number(foundSizeVariant.stock): Number(data.variant.stock)
@@ -26,7 +30,7 @@ export const useDetailItem = (data: any) => {
         }
     }
 
-    const onClickAddToCart = () => {
+    const onClickAddToCart = async () => {
         const constructData = {
             productid: data.productid,
             name: data.productname,
@@ -41,6 +45,7 @@ export const useDetailItem = (data: any) => {
         }
         console.log(constructData)
         dispatch(onAddItem(constructData))
+        await AddItemToCart({productid: constructData.productid, detail: constructData.detail}, customer.customer_id, localStorage.getItem("token"))
     }
 
     useEffect(() => {
@@ -48,6 +53,10 @@ export const useDetailItem = (data: any) => {
             setPrice(Number(foundSizeVariant.price))
         }
     }, [data, foundSizeVariant.price]);
+
+    useEffect(() => {
+        token = localStorage.getItem("token");
+    }, []);
     
     return {
         selectedSize,

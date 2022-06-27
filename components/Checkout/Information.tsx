@@ -3,9 +3,13 @@ import { Typography, TextField, Grid } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useDynamicScreen } from '../../common/hooks/useDynamicScreen';
 import { PrimaryRightButton } from '../Buttons/CheckoutButtons';
+import { useAppSelector } from '../../store/hooks';
+import { checkUserData } from '../../store/reducers/userSlice';
 
 const Information = () => {
     const { push } = useRouter();
+    const userData = useAppSelector(checkUserData);
+    console.log(userData)
 
     const onNextPage = () => {
         push('/checkout/shipment')
@@ -22,6 +26,7 @@ const Information = () => {
                     fullWidth
                     variant='outlined'
                     className='mt-2 mb-8'
+                    value={userData.username}
                     sx={{
                         "& label.Mui-focused": {
                             display: "none"
@@ -48,6 +53,7 @@ const Information = () => {
                 <label>Keterangan Alamat (Opsional)</label>
                 <TextField
                     fullWidth
+                    value={userData?.address?.addressDetail || ''}
                     variant='outlined'
                     className='mt-2 mb-8'
                     sx={{
@@ -62,6 +68,7 @@ const Information = () => {
                 <label>Kota</label>
                 <TextField
                     fullWidth
+                    value={userData?.address?.city || ''}
                     variant='outlined'
                     className='mt-2 mb-8'
                     sx={{
@@ -80,6 +87,7 @@ const Information = () => {
                             fullWidth
                             variant='outlined'
                             className='mt-2 mb-8 mr-2'
+                            value={userData?.address?.province || ''}
                             sx={{
                                 "& label.Mui-focused": {
                                     display: "none"
@@ -94,6 +102,7 @@ const Information = () => {
                         <label>Kode Pos</label>
                         <TextField
                             fullWidth
+                            value={userData?.address?.postNumber || ''}
                             variant='outlined'
                             className='mt-2 mb-8'
                             sx={{
@@ -110,6 +119,7 @@ const Information = () => {
                 <label>Nomor Telepon</label>
                 <TextField
                     fullWidth
+                    value={userData?.phoneNumber || ''}
                     variant='outlined'
                     className='mt-2 mb-8'
                     sx={{

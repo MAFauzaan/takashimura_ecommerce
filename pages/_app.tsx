@@ -12,10 +12,10 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <Provider store={store}>
       <ThemeProvider theme={theme}>
-        <PageLayout>
-          <Component {...pageProps} />
-          <Cart />
-        </PageLayout>
+          <PageLayout>
+            <Component {...pageProps} />
+            <Cart />
+          </PageLayout>
       </ThemeProvider>
     </Provider>
   )

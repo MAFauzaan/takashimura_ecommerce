@@ -9,7 +9,7 @@ const CheckoutPageInformation = () => {
     const { windowWidth } = useDynamicScreen();
 
     return (
-        <div className={windowWidth < 1100 ? 'py-[16px] px-[16px]' : 'py-[50px] px-[120px]'}>
+        <div className={windowWidth < 1100 ? 'py-[16px] px-[16px]' : 'pt-[50px] px-[120px]'}>
             <CheckoutHeader step={0} />
             <Grid container>
                 {

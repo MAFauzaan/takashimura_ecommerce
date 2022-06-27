@@ -9,14 +9,7 @@ export interface IUserSlice {
 }
 
 const initialState: IUserSlice = {
-    userData: {
-        name: 'Muhammad Adityo Fauzaan',
-        email: 'afauzaan34@gmail.com',
-        address: 'Jl. Raya Hankam, Pondok Gede',
-        country: 'Indonesia',
-        kodePos: 17415,
-        telephoneNumber: '081319125026'
-    },
+    userData: {},
     cartItems: [],
     authenticated: false,
     userSelectedItem: {}
@@ -37,23 +30,37 @@ export const userSlice = createSlice({
             state.cartItems = foundItem
         },
         onChangeUserData: (state: any, action: any) => {
-            state.userData = action.payload
+            if (action.payload.orderHistory) {
+                state.userData = action.payload;
+            }
+            else {
+                state.userData = {
+                    ...action.payload,
+                    orderhistory: []
+                }
+            }
+            state.cartItems = action.payload.cartitems
         },
         onLogout: (state: any) => {
             state.isLoggedIn = false
         },
         onChangeAuth: (state: any, action: any) =>{
-            console.log(action.payload)
             const isAuthenticated = action.payload ? true : false
             state.authenticated = isAuthenticated;
-        }
+        },
+        onChangeCartItems: (state: any, action: any) => {
+            state.cartItems = action.payload
+        },
+        onChangeCartItemAmount: (state: any, action: any) => {
+            state.cartItems = action.payload
+        },
     },
-
 })
 
 export const { 
     setUserSelectedItem, onAddItem, onDeleteItem, 
-    onLogout, onChangeAuth, onChangeUserData
+    onLogout, onChangeAuth, onChangeUserData,
+    onChangeCartItems, onChangeCartItemAmount
 } = userSlice.actions;
 
 export const checkUserData = ((state: AppState) => state.user.userData);

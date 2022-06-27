@@ -13,6 +13,8 @@ import "swiper/css";
 import "swiper/css/pagination";
 import style from '../styles/_index.module.scss'
 import ItemCard from '../components/ItemCard/ItemCard';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
+import { checkCartItems, onChangeCartItems } from '../store/reducers/userSlice';
 
 interface IdisplayImage {
   name: string,
@@ -38,6 +40,8 @@ export async function getServerSideProps() {
 };
 
 const Home: NextPage = ({ data, user }: any) => {
+  const cartItems = useAppSelector(checkCartItems)
+  const dispatch = useAppDispatch()
   const { windowWidth } = useDynamicScreen();
   const { replace, push } = useRouter();
   const slicedProducts = data.slice(0, 8);
@@ -169,6 +173,33 @@ const Home: NextPage = ({ data, user }: any) => {
   const onChangeSelectedItem = (item: any) => {
     push(`/products/${item.category}/${item.productid}`)
   }
+
+  useEffect(() => {
+    const getCartItemsData = async() => {
+      if (cartItems.length > 0) {
+        const mappedItems = cartItems.map((v: any) => v.productid)
+        const promises = await Promise.all(mappedItems.map((v: any) => fetch(`http://localhost:5000/get-product/${v}`)));
+        const products = await Promise.all(promises.map((v: any) => v.json()))
+        const reconstructProducts = products.map((v: any) => v.data).flat()
+
+        const newCartItems = cartItems.map((v: any) => {
+          const findSameId = reconstructProducts.find((u: any) => u.productid === v.productid);
+          const findSameVariant = findSameId.sizevariants.find((z: any) => z.size === v.detail.size);
+
+          return {
+            ...v,
+            photos: findSameId.photos,
+            stock: findSameVariant.stock
+          }
+        })
+        dispatch(onChangeCartItems(newCartItems))
+      } 
+    };
+  
+    if (localStorage.getItem("token")) {
+      getCartItemsData()
+    }
+  }, []);
 
   return (
     <>
